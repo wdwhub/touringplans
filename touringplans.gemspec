@@ -8,17 +8,14 @@ Gem::Specification.new do |spec|
   spec.authors       = ["captproton"]
   spec.email         = ["carl@wdwhub.net"]
 
-  spec.summary       = "TODO: Write a short summary, because RubyGems requires one."
-  spec.description   = "TODO: Write a longer description or delete this line."
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = "TouringPlans.com is a great fan website to plan a trip to Walt Disney World in Florida.  This ruby gem makes its API easier to work with."
+  spec.homepage      = "https://github.com/wdwhub/touringplans"
   spec.license       = "MIT"
   spec.required_ruby_version = ">= 2.4.0"
 
-  spec.metadata["allowed_push_host"]  = "TODO: Set to 'https://mygemserver.com'"
-
   spec.metadata["homepage_uri"]       = "https://github.com/wdwhub/touringplans"
   spec.metadata["source_code_uri"]    = "https://github.com/wdwhub/touringplans"
-  spec.metadata["changelog_uri"]      = "TODO: Put your gem's CHANGELOG.md URL here."
+  spec.metadata["changelog_uri"]      = "https://github.com/wdwhub/touringplans/blob/main/Changelog.md"
 
   spec.add_dependency 'httparty', '~> 0.19.0'
 
