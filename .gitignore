@@ -7,4 +7,6 @@
 /spec/reports/
 /tmp/
 
+#custom for this gem
 /Gemfile.lock
+/.tool-versions
