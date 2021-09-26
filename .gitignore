@@ -6,3 +6,10 @@
 /pkg/
 /spec/reports/
 /tmp/
+
+#custom for this gem
+/Gemfile.lock
+/.tool-versions
+
+# rspec failure tracking
+.rspec_status
