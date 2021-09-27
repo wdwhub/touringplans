@@ -10,11 +10,13 @@ module Touringplans
   include HTTParty
   base_uri "touringplans.com"
 
+  PARKS = ["Magic Kingdom", "Animal Kingdom", "Epcot", "Hollywood Studios"].freeze
   # list interest at location
   # current interest are "counter service" "table service", and  "attractions"
   # current locations are the four parks
   def self.list(interest, location)
-    # interest_type = interest # _determine_interest_type(interest)
+    return "The location is not a park" unless PARKS.include? location
+
     interest_type = _determine_interest_type(interest)
     formatted_location_name = _format_location_name(location)
     get("/#{formatted_location_name}/#{interest_type}.json").parsed_response
