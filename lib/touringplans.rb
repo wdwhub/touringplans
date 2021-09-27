@@ -10,12 +10,6 @@ module Touringplans
   include HTTParty
   base_uri "touringplans.com"
 
-  # park dining
-  def self.find_all_dining_at_park(park_name)
-    formatted_park_name = _format_location_name(park_name)
-    get("/#{formatted_park_name}/dining.json").parsed_response
-  end
-
   # list interest at location
   # current interest are "counter service" "table service", and  "attractions"
   # current locations are the four parks
