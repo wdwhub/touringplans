@@ -55,6 +55,10 @@ RSpec.describe Touringplans do
     it "supports listing attractions in Hollywood Studios" do
       expect(Touringplans.list("attractions", "Hollywood Studios").length).to eq(30)
     end
+    ########################
+    it "rejects the location if it is not a name of a wdw park" do
+      expect(Touringplans.list("attractions", "Great America")).to eq("The location is not a Disney park")
+    end
   end
 
   describe "._determine_interest_type" do
