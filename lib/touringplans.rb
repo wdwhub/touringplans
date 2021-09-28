@@ -11,6 +11,10 @@ require 'dry-struct'
 module Touringplans
   class Error < StandardError; end
   # Your code goes here...
+  module Types
+    include Dry.Types()
+  end
+
     include HTTParty
     # currently Touring Plans has no verision in its API
     DEFAULT_API_VERSION = "1"
@@ -123,6 +127,67 @@ module Touringplans
       # call the connection for records
       connection.send(http_method, relative_path, *request_arguments)
     end
+  end
+  
+  class CounterServiceLocation < Dry::Struct
+    transform_keys(&:to_sym)
+
+    attribute :id, Types::Integer
+    attribute :land_id, Types::Integer
+    attribute :name, Types::String      
+    attribute :permalink, Types::String      
+    attribute :category_code, Types::String      
+    attribute :portion_size, Types::String.optional
+    attribute :cost_code, Types::String      
+    attribute :cuisine, Types::String      
+    attribute :phone_number, Types::String.optional     
+    attribute :entree_range, Types::String.optional
+    attribute :when_to_go, Types::String.optional
+    attribute :parking, Types::String.optional
+    attribute :bar, Types::String.optional
+    attribute :wine_list, Types::String.optional
+    attribute :dress, Types::String.optional
+    attribute :awards, Types::String.optional
+    attribute :breakfast_hours, Types::String.optional
+    attribute :lunch_hours, Types::String.optional
+    attribute :dinner_hours, Types::String.optional
+    attribute :selection, Types::String.optional
+    attribute :setting_atmosphere, Types::String.optional
+    attribute :other_recommendations, Types::String.optional
+    attribute :summary, Types::String.optional
+    attribute :house_specialties, Types::String.optional
+    attribute :counter_quality_rating, Types::String.optional
+    attribute :counter_value_rating, Types::String.optional
+    attribute :table_quality_rating, Types::String.optional
+    attribute :table_value_rating, Types::String.optional
+    attribute :overall_rating, Types::String.optional
+    attribute :service_rating, Types::String.optional
+    attribute :friendliness_rating, Types::String.optional
+    attribute :adult_breakfast_menu_url, Types::String.optional
+    attribute :adult_lunch_menu_url, Types::String.optional
+    attribute :adult_dinner_menu_url, Types::String.optional
+    attribute :child_breakfast_menu_url, Types::String.optional
+    attribute :child_lunch_menu_url, Types::String.optional
+    attribute :child_dinner_menu_url, Types::String.optional
+    attribute :requires_credit_card, Types::Params::Bool
+    attribute :requires_pre_payment, Types::Params::Bool
+    attribute :created_at, Types::Params::DateTime
+    attribute :updated_at, Types::Params::DateTime
+    attribute :plan_x_coord, Types::Params::Integer
+    attribute :plan_y_coord, Types::Params::Integer
+    attribute :old_park_id, Types::Params::Integer.optional
+    attribute :old_attraction_id, Types::Params::Integer.optional
+    attribute :plan_name, Types::String.optional
+    attribute :extinct_on, Types::Params::DateTime.optional
+    attribute :opened_on, Types::Params::DateTime.optional
+    attribute :disney_permalink, Types::String.optional
+    attribute :code, Types::String.optional
+    attribute :short_name, Types::String.optional
+    attribute :accepts_reservations, Types::Params::Bool
+    attribute :kosher_available, Types::Params::Bool
+    attribute :dinable_id, Types::Params::Integer
+    attribute :dinable_type, Types::String.optional
+
   end
   
   class Song

@@ -16,34 +16,6 @@ RSpec.describe Touringplans do
       include Dry.Types()
     end
 
-    class CounterServiceLocation < Dry::Struct
-      transform_keys(&:to_sym)
-
-      attribute :id, Types::Integer
-      attribute :land_id, Types::Integer
-      attribute :name, Types::String      
-      attribute :permalink, Types::String      
-      attribute :category_code, Types::String      
-      attribute :portion_size, Types::String.optional
-      attribute :cost_code, Types::String      
-      attribute :cuisine, Types::String      
-      attribute :phone_number, Types::String.optional     
-      attribute :entree_range, Types::String.optional
-      attribute :when_to_go, Types::String.optional
-      attribute :parking, Types::String.optional
-      attribute :bar, Types::String.optional
-      attribute :wine_list, Types::String.optional
-      attribute :dress, Types::String.optional
-      attribute :awards, Types::String.optional
-      attribute :breakfast_hours, Types::String.optional
-      attribute :lunch_hours, Types::String.optional
-      attribute :dinner_hours, Types::String.optional
-      attribute :selection, Types::String.optional
-      attribute :setting_atmosphere, Types::String.optional
-      attribute :other_recommendations, Types::String.optional
-      attribute :summary, Types::String.optional
-    end
-
     
     class Attraction < Dry::Struct
       transform_keys(&:to_sym)
@@ -66,7 +38,7 @@ RSpec.describe Touringplans do
         counter_service_listings_hashes = response.parsed_response[0]
 
         counter_service_listings_hashes.each do |hash|
-          counter_service = CounterServiceLocation.new(hash)
+          counter_service = Touringplans::CounterServiceLocation.new(hash)
           counter_service_listings << counter_service
         end
         expect(counter_service_listings.length).to eq(11)
@@ -78,7 +50,7 @@ RSpec.describe Touringplans do
         counter_service_listings_hashes = response.parsed_response[0]
 
         counter_service_listings_hashes.each do |hash|
-          counter_service = CounterServiceLocation.new(hash)
+          counter_service = Touringplans::CounterServiceLocation.new(hash)
           counter_service_listings << counter_service
         end
         expect(counter_service_listings.last).to eq("something")
