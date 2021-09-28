@@ -13,8 +13,14 @@ gem "rubocop", "~> 1.7", require: false
 # testing
 gem "rspec", "~> 3.0"
 
+## custom for gem
 # connect to the API
 gem "httparty", "~> 0.19.0"
+# convert json to objects
+gem 'multi_json', '~> 1.15'
+gem 'representable', '~> 3.1', '>= 3.1.1'
+# convert hash to objects
+gem 'dry-struct', '~> 1.4'
 
 # turn json from touringplans.com into ruby objects
 # gem "representable", "~> 3.1", ">= 3.1.1"
