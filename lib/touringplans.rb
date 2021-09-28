@@ -4,6 +4,8 @@ require_relative "touringplans/version"
 require "httparty"
 require "ostruct"
 require 'representable/json'
+require 'dry-struct'
+
 
 # list and show attractions and eateries at Walt Disney World
 module Touringplans
@@ -140,8 +142,18 @@ module Touringplans
   class AttractionRepresenter < Representable::Decorator
     include Representable::JSON
 
-    property :title
-    property :track
+    property :name
+    property :short_name
+    property :permalink
+  end
+
+  class AttractionHashRepresenter < Representable::Decorator
+    include Representable::Hash
+    include Representable::Hash::AllowSymbols
+  
+    property :name
+    property :short_name
+    property :permalink
   end
 
   PARK_KEYS = %i[magic_kingdom animal_kingdom epcot hollywood_studios].freeze
