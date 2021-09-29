@@ -2,15 +2,13 @@
 
 require_relative "touringplans/version"
 require "httparty"
-require "ostruct"
-require 'representable/json'
 require 'dry-struct'
 
 
 # list and show attractions and eateries at Walt Disney World
 module Touringplans
   class Error < StandardError; end
-  # Your code goes here...
+
   module Types
     include Dry.Types()
   end
