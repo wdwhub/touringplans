@@ -259,22 +259,38 @@ module Touringplans
     attribute :permalink, Types::String      
   end
 
-  class Song
-    
-  end
-
-
   PARK_KEYS = %i[magic_kingdom animal_kingdom epcot hollywood_studios].freeze
+  INTERESTS = %i[counter_services table_services attractions hotels].freeze
   # list interest at location
   # current interest are "counter service" "table service", and  "attractions"
   # current locations are the four parks
   def self.list(interest, location)
     
     return "The location is not a Disney park" unless PARK_KEYS.include? _symbolize(location)
+    return "The interest is not valid"         unless INTERESTS.include? _symbolize(interest)
 
-    interest_type = _determine_interest_type(interest)
-    formatted_location_name = _format_location_name(location)
-    get("/#{formatted_location_name}/#{interest_type}.json").parsed_response
+    connection = Connection.new
+    connection.query(key: "HowdyLen")
+    client = Client
+              .new(connection: connection, routes: ROUTES)
+    listings            =[]
+
+    interest_type       = _determine_interest_type(interest)
+    route               = _assemble_route(location, interest_type)
+
+    response            = client.send(route).parsed_response
+    listing_hashes     = _collect_listing_hashes_from_response(interest, response)
+
+    hash = listing_hashes.first
+
+    listing_hashes.each do |hash|
+      listing = CounterServiceLocation.new(hash)  if interest == "counter services"
+      listing = TableServiceLocation.new(hash)    if interest == "table services"
+      listing = ParkAttraction.new(hash)          if interest == "attractions"
+      listings << listing
+    end
+
+    listings
   end
 
   def self._format_location_name(location_name)
@@ -284,14 +300,28 @@ module Touringplans
   def self._determine_interest_type(interest)
     interest_type = interest
 
-    interest_type = "dining" if interest == "counter service"
-    interest_type = "dining" if interest == "table service"
+    interest_type = "dining" if interest == "counter services"
+    interest_type = "dining" if interest == "table services"
 
     interest_type
   end
 
-  def self._symbolize(location)
+  def self._symbolize(item)
     # turn a string into a symbol, like comparing to PARK_KEYS
-    location.downcase.gsub(" ", "_").to_sym
+    item.to_s.downcase.gsub(" ", "_").to_sym
   end
+
+  def self._assemble_route(location, interest_type)
+    formatted_location      = location.to_s.downcase.gsub(" ", "_")
+    formatted_interest_type = interest_type.to_s.downcase.gsub(" ", "_")
+    "#{formatted_location}_#{formatted_interest_type}"
+  end
+
+  def self._collect_listing_hashes_from_response(interest, response)
+    listing_hashes = response     if interest == "attractions"
+    listing_hashes = response[0]  if interest == "counter services"
+    listing_hashes = response[1]  if interest == "table services"
+    listing_hashes
+  end
+  
 end
