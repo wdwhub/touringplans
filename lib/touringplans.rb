@@ -2,26 +2,23 @@
 
 require_relative "touringplans/version"
 require "httparty"
-require "ostruct"
-require 'representable/json'
-require 'dry-struct'
-
+require "dry-struct"
 
 # list and show attractions and eateries at Walt Disney World
 module Touringplans
   class Error < StandardError; end
-  # Your code goes here...
+
   module Types
     include Dry.Types()
   end
 
-    include HTTParty
-    # currently Touring Plans has no verision in its API
-    DEFAULT_API_VERSION = "1"
-    DEFAULT_BASE_URI  = "https://touringplans.com/"
-    DEFAULT_QUERY     = {}
+  include HTTParty
+  # currently Touring Plans has no verision in its API
+  DEFAULT_API_VERSION = "1"
+  DEFAULT_BASE_URI  = "https://touringplans.com/"
+  DEFAULT_QUERY     = {}
 
-    base_uri DEFAULT_BASE_URI
+  base_uri DEFAULT_BASE_URI
 
   ROUTES = {
     magic_kingdom_dining: {
@@ -57,7 +54,7 @@ module Touringplans
       path: "/hollywood-studios/attractions.json"
     }
   }
-
+  # deals solely with how to create access to the resource, the lock of "lock & key"
   class Connection
     # concerned only on where it gets the info it needs
     # and maybe a version number
@@ -79,7 +76,7 @@ module Touringplans
     def query(params={})
       @query.update(params)
     end
-    
+
     def get(relative_path, query={})
       # relative_path = add_api_version(relative_path)
       connection.get relative_path, query: @query.merge(query)
@@ -96,9 +93,10 @@ module Touringplans
 
     # def api_version_path
     #   "v" + @api_version.to_s
-    # end    
+    # end
   end
 
+  # deals solely with how to manage the connection, the key of "lock & key"
   class Client
     def initialize(connection:, routes:)
       @connection = connection
@@ -106,7 +104,6 @@ module Touringplans
     end
 
     def method_missing(method, *request_arguments)
-
       # retrieve the route map
       route_map = routes.fetch(method)
 
@@ -119,7 +116,6 @@ module Touringplans
     attr_reader :connection, :routes
 
     def response_from_route(route_map, request_arguments)
-
       # gather the routes required parameters
       http_method   = route_map.fetch(:method)
       relative_path = route_map.fetch(:path)
@@ -128,19 +124,20 @@ module Touringplans
       connection.send(http_method, relative_path, *request_arguments)
     end
   end
-  
+
+  # model with the attributes
   class CounterServiceLocation < Dry::Struct
     transform_keys(&:to_sym)
 
     attribute :id, Types::Integer
     attribute :land_id, Types::Integer
-    attribute :name, Types::String      
-    attribute :permalink, Types::String      
-    attribute :category_code, Types::String      
+    attribute :name, Types::String
+    attribute :permalink, Types::String
+    attribute :category_code, Types::String
     attribute :portion_size, Types::String.optional
     attribute :cost_code, Types::String.optional
-    attribute :cuisine, Types::String      
-    attribute :phone_number, Types::String.optional     
+    attribute :cuisine, Types::String
+    attribute :phone_number, Types::String.optional
     attribute :entree_range, Types::String.optional
     attribute :when_to_go, Types::String.optional
     attribute :parking, Types::String.optional
@@ -187,21 +184,21 @@ module Touringplans
     attribute :kosher_available, Types::Params::Bool
     attribute :dinable_id, Types::Params::Integer
     attribute :dinable_type, Types::String.optional
-
   end
-  
+
+  # model with the attributes
   class TableServiceLocation < Dry::Struct
     transform_keys(&:to_sym)
 
     attribute :id, Types::Integer
     attribute :land_id, Types::Integer
-    attribute :name, Types::String      
-    attribute :permalink, Types::String      
-    attribute :category_code, Types::String      
+    attribute :name, Types::String
+    attribute :permalink, Types::String
+    attribute :category_code, Types::String
     attribute :portion_size, Types::String.optional
     attribute :cost_code, Types::String.optional
-    attribute :cuisine, Types::String      
-    attribute :phone_number, Types::String.optional     
+    attribute :cuisine, Types::String
+    attribute :phone_number, Types::String.optional
     attribute :entree_range, Types::String.optional
     attribute :when_to_go, Types::String.optional
     attribute :parking, Types::String.optional
@@ -248,15 +245,15 @@ module Touringplans
     attribute :kosher_available, Types::Params::Bool
     attribute :dinable_id, Types::Params::Integer
     attribute :dinable_type, Types::String.optional
-
   end
 
+  # model with the attributes
   class ParkAttraction < Dry::Struct
     transform_keys(&:to_sym)
 
     attribute :name, Types::String
     attribute :short_name, Types::String
-    attribute :permalink, Types::String      
+    attribute :permalink, Types::String
   end
 
   PARK_KEYS = %i[magic_kingdom animal_kingdom epcot hollywood_studios].freeze
@@ -265,32 +262,28 @@ module Touringplans
   # current interest are "counter service" "table service", and  "attractions"
   # current locations are the four parks
   def self.list(interest, location)
-    
     return "The location is not a Disney park" unless PARK_KEYS.include? _symbolize(location)
     return "The interest is not valid"         unless INTERESTS.include? _symbolize(interest)
 
-    connection = Connection.new
-    connection.query(key: "HowdyLen")
-    client = Client
-              .new(connection: connection, routes: ROUTES)
-    listings            =[]
-
+    client = _setup_client
+    listings            = []
     interest_type       = _determine_interest_type(interest)
     route               = _assemble_route(location, interest_type)
-
     response            = client.send(route).parsed_response
-    listing_hashes     = _collect_listing_hashes_from_response(interest, response)
-
-    hash = listing_hashes.first
+    listing_hashes      = _collect_listing_hashes_from_response(interest, response)
 
     listing_hashes.each do |hash|
-      listing = CounterServiceLocation.new(hash)  if interest == "counter services"
-      listing = TableServiceLocation.new(hash)    if interest == "table services"
-      listing = ParkAttraction.new(hash)          if interest == "attractions"
+      listing = _set_model_from_hash(interest, hash)
       listings << listing
     end
 
     listings
+  end
+
+  def self._setup_client
+    connection = Connection.new
+    connection.query(key: "HowdyLen")
+    Client.new(connection: connection, routes: ROUTES)
   end
 
   def self._format_location_name(location_name)
@@ -307,7 +300,7 @@ module Touringplans
   end
 
   def self._symbolize(item)
-    # turn a string into a symbol, like comparing to PARK_KEYS
+    # turn a Stringinto a symbol, like comparing to PARK_KEYS
     item.to_s.downcase.gsub(" ", "_").to_sym
   end
 
@@ -323,5 +316,11 @@ module Touringplans
     listing_hashes = response[1]  if interest == "table services"
     listing_hashes
   end
-  
+
+  def self._set_model_from_hash(interest, hash)
+    listing = CounterServiceLocation.new(hash)  if interest == "counter services"
+    listing = TableServiceLocation.new(hash)    if interest == "table services"
+    listing = ParkAttraction.new(hash)          if interest == "attractions"
+    listing
+  end
 end

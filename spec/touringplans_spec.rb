@@ -5,7 +5,6 @@ RSpec.describe Touringplans do
     expect(Touringplans::VERSION).not_to be nil
   end
 
-
   describe ".list" do
     context "at Magic Kingdom" do
       it "supports listing counter service dining locations" do
@@ -23,7 +22,6 @@ RSpec.describe Touringplans do
     end
     ########################
     context "at Animal Kingdom" do
-    
       it "supports listing counter service dining locations in Animal Kingdom" do
         expect(Touringplans.list("counter services", "Animal Kingdom").length).to eq(11)
       end
@@ -72,11 +70,11 @@ RSpec.describe Touringplans do
 
   describe "._determine_interest_type" do
     it "sets interest_type to 'dining' when the interest is 'counter service'" do
-      expect(Touringplans._determine_interest_type("counter services")).to  eq("dining")
+      expect(Touringplans._determine_interest_type("counter services")).to eq("dining")
     end
 
     it "sets interest_type to 'dining' when the interest is 'table service'" do
-      expect(Touringplans._determine_interest_type("table services")).to  eq("dining")
+      expect(Touringplans._determine_interest_type("table services")).to eq("dining")
     end
 
     it "sets interest_type to 'attractions' when the interest is 'attractions'" do
