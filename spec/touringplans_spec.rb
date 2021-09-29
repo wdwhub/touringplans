@@ -16,34 +16,6 @@ RSpec.describe Touringplans do
       include Dry.Types()
     end
 
-    class CounterServiceLocation < Dry::Struct
-      transform_keys(&:to_sym)
-
-      attribute :id, Types::Integer
-      attribute :land_id, Types::Integer
-      attribute :name, Types::String      
-      attribute :permalink, Types::String      
-      attribute :category_code, Types::String      
-      attribute :portion_size, Types::String.optional
-      attribute :cost_code, Types::String      
-      attribute :cuisine, Types::String      
-      attribute :phone_number, Types::String.optional     
-      attribute :entree_range, Types::String.optional
-      attribute :when_to_go, Types::String.optional
-      attribute :parking, Types::String.optional
-      attribute :bar, Types::String.optional
-      attribute :wine_list, Types::String.optional
-      attribute :dress, Types::String.optional
-      attribute :awards, Types::String.optional
-      attribute :breakfast_hours, Types::String.optional
-      attribute :lunch_hours, Types::String.optional
-      attribute :dinner_hours, Types::String.optional
-      attribute :selection, Types::String.optional
-      attribute :setting_atmosphere, Types::String.optional
-      attribute :other_recommendations, Types::String.optional
-      attribute :summary, Types::String.optional
-    end
-
     
     class Attraction < Dry::Struct
       transform_keys(&:to_sym)
@@ -55,6 +27,8 @@ RSpec.describe Touringplans do
 
 
     context "at Magic Kingdom" do
+
+
       it "supports listing dining locations" do
         response = client.magic_kingdom_dining
         expect(response.parsed_response.length).to eq(2)
@@ -66,7 +40,7 @@ RSpec.describe Touringplans do
         counter_service_listings_hashes = response.parsed_response[0]
 
         counter_service_listings_hashes.each do |hash|
-          counter_service = CounterServiceLocation.new(hash)
+          counter_service = Touringplans::CounterServiceLocation.new(hash)
           counter_service_listings << counter_service
         end
         expect(counter_service_listings.length).to eq(11)
@@ -78,23 +52,69 @@ RSpec.describe Touringplans do
         counter_service_listings_hashes = response.parsed_response[0]
 
         counter_service_listings_hashes.each do |hash|
-          counter_service = CounterServiceLocation.new(hash)
+          counter_service = Touringplans::CounterServiceLocation.new(hash)
           counter_service_listings << counter_service
         end
-        expect(counter_service_listings.last).to eq("something")
+        expect(counter_service_listings.last.class.to_s).to eq("Touringplans::CounterServiceLocation")
       end
 
 
       it "supports listing table service locations" do
-        response                = client.magic_kingdom_dining
-        table_service_listings  = response.parsed_response[1]
+        response                        = client.magic_kingdom_dining
+        table_service_listings        =[]
+        table_service_listings_hashes = response.parsed_response[1]
+
+        table_service_listings_hashes.each do |hash|
+          table_service = Touringplans::TableServiceLocation.new(hash)
+          table_service_listings << table_service
+        end
         expect(table_service_listings.length).to eq(8)
       end
+
+      it "supports listing a collection of TableServiceLocation objects" do
+        response                        = client.magic_kingdom_dining
+        table_service_listings        =[]
+        table_service_listings_hashes = response.parsed_response[0]
+
+        table_service_listings_hashes.each do |hash|
+          table_service = Touringplans::TableServiceLocation.new(hash)
+          table_service_listings << table_service
+        end
+        expect(table_service_listings.last.class.to_s).to eq("Touringplans::TableServiceLocation")
+      end
+
+      
       it "supports listing attractions" do
         response      = client.magic_kingdom_attractions
         attractions   = response.parsed_response
         expect(attractions.length).to eq(58)
       end      
+
+      it "supports listing all attractions" do
+        response                        = client.magic_kingdom_attractions
+        attraction_listings        =[]
+        attracton_listings_hashes = response.parsed_response
+
+        attracton_listings_hashes.each do |hash|
+          attraction = Touringplans::ParkAttraction.new(hash)
+          attraction_listings << attraction
+        end
+        expect(attraction_listings.length).to eq(58)
+      end
+
+      it "supports listing a collection of Attraction objects" do
+        response                        = client.magic_kingdom_attractions
+        attraction_listings        =[]
+        attraction_listings_hashes = response.parsed_response
+
+        attraction_listings_hashes.each do |hash|
+          attraction = Touringplans::ParkAttraction.new(hash)
+          attraction_listings << attraction
+        end
+        expect(attraction_listings.last.class.to_s).to eq("Touringplans::ParkAttraction")
+      end
+
+      
     end
 
     ########################    
@@ -104,22 +124,84 @@ RSpec.describe Touringplans do
         expect(response.parsed_response.length).to eq(2)
       end
 
-      it "supports listing counter service locations" do
-        response                  = client.animal_kingdom_dining
-        counter_service_listings  = response.parsed_response[0]
+      it "supports listing counter service locations as a collection" do
+        response                        = client.animal_kingdom_dining
+        counter_service_listings        =[]
+        counter_service_listings_hashes = response.parsed_response[0]
+
+        counter_service_listings_hashes.each do |hash|
+          counter_service = Touringplans::CounterServiceLocation.new(hash)
+          counter_service_listings << counter_service
+        end
         expect(counter_service_listings.length).to eq(11)
       end
 
+      it "supports listing a collection of CounterServiceLocation objects" do
+        response                        = client.animal_kingdom_dining
+        counter_service_listings        =[]
+        counter_service_listings_hashes = response.parsed_response[0]
+
+        counter_service_listings_hashes.each do |hash|
+          counter_service = Touringplans::CounterServiceLocation.new(hash)
+          counter_service_listings << counter_service
+        end
+        expect(counter_service_listings.last.class.to_s).to eq("Touringplans::CounterServiceLocation")
+      end
+
+
       it "supports listing table service locations" do
-        response                = client.animal_kingdom_dining
-        table_service_listings  = response.parsed_response[1]
+        response                        = client.animal_kingdom_dining
+        table_service_listings        =[]
+        table_service_listings_hashes = response.parsed_response[1]
+
+        table_service_listings_hashes.each do |hash|
+          table_service = Touringplans::TableServiceLocation.new(hash)
+          table_service_listings << table_service
+        end
         expect(table_service_listings.length).to eq(4)
       end
 
+      it "supports listing a collection of TableServiceLocation objects" do
+        response                        = client.animal_kingdom_dining
+        table_service_listings        =[]
+        table_service_listings_hashes = response.parsed_response[0]
+
+        table_service_listings_hashes.each do |hash|
+          table_service = Touringplans::TableServiceLocation.new(hash)
+          table_service_listings << table_service
+        end
+        expect(table_service_listings.last.class.to_s).to eq("Touringplans::TableServiceLocation")
+      end
+
+      #  ++++++++++++++
       it "supports listing attractions" do
         response      = client.animal_kingdom_attractions
         attractions   = response.parsed_response
         expect(attractions.length).to eq(41)
+      end
+
+      it "supports listing all attractions" do
+        response                        = client.animal_kingdom_attractions
+        attraction_listings        =[]
+        attracton_listings_hashes = response.parsed_response
+
+        attracton_listings_hashes.each do |hash|
+          attraction = Touringplans::ParkAttraction.new(hash)
+          attraction_listings << attraction
+        end
+        expect(attraction_listings.length).to eq(41)
+      end
+
+      it "supports listing a collection of Attraction objects" do
+        response                        = client.animal_kingdom_attractions
+        attraction_listings        =[]
+        attraction_listings_hashes = response.parsed_response
+
+        attraction_listings_hashes.each do |hash|
+          attraction = Touringplans::ParkAttraction.new(hash)
+          attraction_listings << attraction
+        end
+        expect(attraction_listings.last.class.to_s).to eq("Touringplans::ParkAttraction")
       end
       
     end
@@ -131,22 +213,85 @@ RSpec.describe Touringplans do
         expect(response.parsed_response.length).to eq(2)
       end
 
-      it "supports listing counter service locations" do
-        response                  = client.epcot_dining
-        counter_service_listings  = response.parsed_response[0]
+      it "supports listing counter service locations as a collection" do
+        response                        = client.epcot_dining
+        counter_service_listings        =[]
+        counter_service_listings_hashes = response.parsed_response[0]
+
+        counter_service_listings_hashes.each do |hash|
+          counter_service = Touringplans::CounterServiceLocation.new(hash)
+          counter_service_listings << counter_service
+        end
         expect(counter_service_listings.length).to eq(16)
       end
 
+      it "supports listing a collection of CounterServiceLocation objects" do
+        response                        = client.epcot_dining
+        counter_service_listings        =[]
+        counter_service_listings_hashes = response.parsed_response[0]
+
+        counter_service_listings_hashes.each do |hash|
+          counter_service = Touringplans::CounterServiceLocation.new(hash)
+          counter_service_listings << counter_service
+        end
+        expect(counter_service_listings.last.class.to_s).to eq("Touringplans::CounterServiceLocation")
+      end
+
+
       it "supports listing table service locations" do
-        response                = client.epcot_dining
-        table_service_listings  = response.parsed_response[1]
+        response                      = client.epcot_dining
+        table_service_listings        =[]
+        table_service_listings_hashes = response.parsed_response[1]
+
+        table_service_listings_hashes.each do |hash|
+          table_service = Touringplans::TableServiceLocation.new(hash)
+          table_service_listings << table_service
+        end
         expect(table_service_listings.length).to eq(20)
       end
+
+      it "supports listing a collection of TableServiceLocation objects" do
+        response                      = client.epcot_dining
+        table_service_listings        =[]
+        table_service_listings_hashes = response.parsed_response[0]
+
+        table_service_listings_hashes.each do |hash|
+          table_service = Touringplans::TableServiceLocation.new(hash)
+          table_service_listings << table_service
+        end
+        expect(table_service_listings.last.class.to_s).to eq("Touringplans::TableServiceLocation")
+      end
+
+      #  ++++++++++++++
 
       it "supports listing attractions" do
         response      = client.epcot_attractions
         attractions   = response.parsed_response
-        expect(attractions.length).to eq(33)
+        expect(attractions.length).to eq(32)
+      end
+
+      it "supports listing all attractions" do
+        response                        = client.epcot_attractions
+        attraction_listings        =[]
+        attracton_listings_hashes = response.parsed_response
+
+        attracton_listings_hashes.each do |hash|
+          attraction = Touringplans::ParkAttraction.new(hash)
+          attraction_listings << attraction
+        end
+        expect(attraction_listings.length).to eq(32)
+      end
+
+      it "supports listing a collection of Attraction objects" do
+        response                        = client.epcot_attractions
+        attraction_listings        =[]
+        attraction_listings_hashes = response.parsed_response
+
+        attraction_listings_hashes.each do |hash|
+          attraction = Touringplans::ParkAttraction.new(hash)
+          attraction_listings << attraction
+        end
+        expect(attraction_listings.last.class.to_s).to eq("Touringplans::ParkAttraction")
       end
       
     end
@@ -158,17 +303,56 @@ RSpec.describe Touringplans do
         expect(response.parsed_response.length).to eq(2)
       end
 
-      it "supports listing counter service locations" do
-        response                  = client.hollywood_studios_dining
-        counter_service_listings  = response.parsed_response[0]
+      it "supports listing counter service locations as a collection" do
+        response                        = client.hollywood_studios_dining
+        counter_service_listings        =[]
+        counter_service_listings_hashes = response.parsed_response[0]
+
+        counter_service_listings_hashes.each do |hash|
+          counter_service = Touringplans::CounterServiceLocation.new(hash)
+          counter_service_listings << counter_service
+        end
         expect(counter_service_listings.length).to eq(11)
       end
 
+      it "supports listing a collection of CounterServiceLocation objects" do
+        response                        = client.hollywood_studios_dining
+        counter_service_listings        =[]
+        counter_service_listings_hashes = response.parsed_response[0]
+
+        counter_service_listings_hashes.each do |hash|
+          counter_service = Touringplans::CounterServiceLocation.new(hash)
+          counter_service_listings << counter_service
+        end
+        expect(counter_service_listings.last.class.to_s).to eq("Touringplans::CounterServiceLocation")
+      end
+
+
       it "supports listing table service locations" do
-        response                = client.hollywood_studios_dining
-        table_service_listings  = response.parsed_response[1]
+        response                      = client.hollywood_studios_dining
+        table_service_listings        =[]
+        table_service_listings_hashes = response.parsed_response[1]
+
+        table_service_listings_hashes.each do |hash|
+          table_service = Touringplans::TableServiceLocation.new(hash)
+          table_service_listings << table_service
+        end
         expect(table_service_listings.length).to eq(6)
       end
+
+      it "supports listing a collection of TableServiceLocation objects" do
+        response                      = client.hollywood_studios_dining
+        table_service_listings        =[]
+        table_service_listings_hashes = response.parsed_response[0]
+
+        table_service_listings_hashes.each do |hash|
+          table_service = Touringplans::TableServiceLocation.new(hash)
+          table_service_listings << table_service
+        end
+        expect(table_service_listings.last.class.to_s).to eq("Touringplans::TableServiceLocation")
+      end
+
+      #  ++++++++++++++
 
       it "supports listing attractions" do
         response      = client.hollywood_studios_attractions
@@ -179,102 +363,6 @@ RSpec.describe Touringplans do
     
   end
 
-  # describe "dry-struct" do
-  #   require 'dry-struct'
-
-  #   module Types
-  #     include Dry.Types()
-  #   end
-
-  #   class Attraction < Dry::Struct
-  #       transform_keys(&:to_sym)
-  #     attribute :name, Types::String
-  #     attribute :short_name, Types::String
-  #     attribute :permalink, Types::String
-  #   end
-    
-    
-  #   context "when trying to coerce hash" do
-  #     class Person < Dry::Struct
-  #       attribute :name, Types::String
-  #       attribute :age, Types::Integer
-  #     end
-
-  #     it "becomes an ostruct" do
-  #       hash = {name:"Johnson", age: 21}
-  #       person = Person.new(hash)
-  #       expect(person.name).to eq("Johnson") 
-  #     end
-  #   end
-
-  #   context "when trying to coerce an attraction" do
-  #     it "becomes an ostruct" do
-  #       ride = {"name":"The American Adventure","short_name":"American Adv","permalink":"american-adventure"}
-  #       attraction = Attraction.new(ride)
-  #       expect(attraction.permalink).to eq("american-adventure") 
-  #     end
-  #   end
-
-  #   context "when trying to coerce an array of attraction hashes" do
-  #     rides = Touringplans.list("attractions", "Epcot")
-  #     new_attraction = Attraction.new({"name":"The American Adventure",
-  #                                       "short_name":"American Adv",
-  #                                       "permalink":"american-adventure"})
-
-  #     it "becomes an array of Attraction objects" do
-  #       attractions = []
-  #       rides.each do |ride|
-  #         attraction = Attraction.new(ride)
-  #         attractions << attraction
-  #       end
-
-  #       expect(attractions.first.class).to eq(new_attraction.class) 
-  #     end
-  #   end
-    
-  # end
-  
-  describe "representable" do
-    json_results        = HTTParty.get('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY', format: :plain)
-
-    it "turns attraction json into an object representation" do
-      ride = Touringplans::Attraction.new
-      ride = Touringplans::AttractionRepresenter.new(ride).from_json(%{ {"name":"dumbo"} })    
-      expect(ride.title).to eq("dumbo")
-    end
-
-    context "when working with touring plans" do
-      require 'httparty'
-      epcot_json_results  = HTTParty.get('https://touringplans.com/epcot/attractions.json', format: :plain)
-      epcot_results       = HTTParty.get('https://touringplans.com/epcot/attractions.json')
-      ride = Touringplans::Attraction.new
-      # ride = Touringplans::AttractionRepresenter.new(ride).from_json(epcot_json_results[0][0])    
-
-      it "can convert an attraction hash collection into an ostruct collection" do
-        # ride = Touringplans::AttractionHashRepresenter.new(ride)
-        # converted = ride.from_hash("title" => "Road To Never")
-        expect(epcot_json_results).to eq("something") 
-      end
-
-      it "can convert json to ruby objects" do
-        epcot_sample = {name:"The American Adventure",short_name:"American Adv",permalink:"american-adventure"}
-        ride = Touringplans::AttractionRepresenter.new(ride).from_json(%{ {"name":"The American Adventure","short_name":"American Adv","permalink":"american-adventure"} })    
-        expect(ride).to eq("something") 
-        
-      end
-      # json_results        = HTTParty.get('https://touringplans.com/epcot/attractions.json', format: :plain)
-      it "can convert hash to ruby objects" do
-        epcot_sample = {name:"The American Adventure",short_name:"American Adv",permalink:"american-adventure"}
-        ride = Touringplans::AttractionRepresenter.new(ride).from_json({name:"The American Adventure",short_name:"American Adv",permalink:"american-adventure"})    
-        expect(ride).to eq("something") 
-        
-      end
-      
-      
-    end
-    
-    
-  end
 
   describe ".list" do
     it "supports listing counter service dining locations in Magic Kingdom" do
@@ -311,7 +399,7 @@ RSpec.describe Touringplans do
     end
 
     it "supports listing attractions in Epcot" do
-      expect(Touringplans.list("attractions", "Epcot").length).to eq(33)
+      expect(Touringplans.list("attractions", "Epcot").length).to eq(32)
     end
 
     ########################
