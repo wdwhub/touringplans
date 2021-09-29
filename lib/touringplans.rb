@@ -138,7 +138,7 @@ module Touringplans
     attribute :permalink, Types::String      
     attribute :category_code, Types::String      
     attribute :portion_size, Types::String.optional
-    attribute :cost_code, Types::String      
+    attribute :cost_code, Types::String.optional
     attribute :cuisine, Types::String      
     attribute :phone_number, Types::String.optional     
     attribute :entree_range, Types::String.optional
@@ -160,7 +160,7 @@ module Touringplans
     attribute :counter_value_rating, Types::String.optional
     attribute :table_quality_rating, Types::String.optional
     attribute :table_value_rating, Types::String.optional
-    attribute :overall_rating, Types::String.optional
+    attribute :overall_rating, Types::Float.optional
     attribute :service_rating, Types::String.optional
     attribute :friendliness_rating, Types::String.optional
     attribute :adult_breakfast_menu_url, Types::String.optional
@@ -173,8 +173,8 @@ module Touringplans
     attribute :requires_pre_payment, Types::Params::Bool
     attribute :created_at, Types::Params::DateTime
     attribute :updated_at, Types::Params::DateTime
-    attribute :plan_x_coord, Types::Params::Integer
-    attribute :plan_y_coord, Types::Params::Integer
+    attribute :plan_x_coord, Types::Coercible::Integer.optional
+    attribute :plan_y_coord, Types::Coercible::Integer.optional
     attribute :old_park_id, Types::Params::Integer.optional
     attribute :old_attraction_id, Types::Params::Integer.optional
     attribute :plan_name, Types::String.optional
@@ -190,36 +190,79 @@ module Touringplans
 
   end
   
+  class TableServiceLocation < Dry::Struct
+    transform_keys(&:to_sym)
+
+    attribute :id, Types::Integer
+    attribute :land_id, Types::Integer
+    attribute :name, Types::String      
+    attribute :permalink, Types::String      
+    attribute :category_code, Types::String      
+    attribute :portion_size, Types::String.optional
+    attribute :cost_code, Types::String.optional
+    attribute :cuisine, Types::String      
+    attribute :phone_number, Types::String.optional     
+    attribute :entree_range, Types::String.optional
+    attribute :when_to_go, Types::String.optional
+    attribute :parking, Types::String.optional
+    attribute :bar, Types::String.optional
+    attribute :wine_list, Types::String.optional
+    attribute :dress, Types::String.optional
+    attribute :awards, Types::String.optional
+    attribute :breakfast_hours, Types::String.optional
+    attribute :lunch_hours, Types::String.optional
+    attribute :dinner_hours, Types::String.optional
+    attribute :selection, Types::String.optional
+    attribute :setting_atmosphere, Types::String.optional
+    attribute :other_recommendations, Types::String.optional
+    attribute :summary, Types::String.optional
+    attribute :house_specialties, Types::String.optional
+    attribute :counter_quality_rating, Types::String.optional
+    attribute :counter_value_rating, Types::String.optional
+    attribute :table_quality_rating, Types::Params::Decimal.optional
+    attribute :table_value_rating, Types::Params::Decimal.optional
+    attribute :overall_rating, Types::Params::Decimal.optional
+    attribute :service_rating, Types::Params::Decimal.optional
+    attribute :friendliness_rating, Types::Params::Decimal.optional
+    attribute :adult_breakfast_menu_url, Types::String.optional
+    attribute :adult_lunch_menu_url, Types::String.optional
+    attribute :adult_dinner_menu_url, Types::String.optional
+    attribute :child_breakfast_menu_url, Types::String.optional
+    attribute :child_lunch_menu_url, Types::String.optional
+    attribute :child_dinner_menu_url, Types::String.optional
+    attribute :requires_credit_card, Types::Params::Bool
+    attribute :requires_pre_payment, Types::Params::Bool
+    attribute :created_at, Types::Params::DateTime
+    attribute :updated_at, Types::Params::DateTime
+    attribute :plan_x_coord, Types::Params::Integer.optional
+    attribute :plan_y_coord, Types::Params::Integer.optional
+    attribute :old_park_id, Types::Params::Integer.optional
+    attribute :old_attraction_id, Types::Params::Integer.optional
+    attribute :plan_name, Types::String.optional
+    attribute :extinct_on, Types::Params::DateTime.optional
+    attribute :opened_on, Types::Params::DateTime.optional
+    attribute :disney_permalink, Types::String.optional
+    attribute :code, Types::String.optional
+    attribute :short_name, Types::String.optional
+    attribute :accepts_reservations, Types::Params::Bool
+    attribute :kosher_available, Types::Params::Bool
+    attribute :dinable_id, Types::Params::Integer
+    attribute :dinable_type, Types::String.optional
+
+  end
+
+  class ParkAttraction < Dry::Struct
+    transform_keys(&:to_sym)
+
+    attribute :name, Types::String
+    attribute :short_name, Types::String
+    attribute :permalink, Types::String      
+  end
+
   class Song
     
   end
 
-  class SongRepresenter < Representable::Decorator
-    include Representable::JSON
-
-    property :title
-    property :track
-  end
-
-
-  class Attraction < OpenStruct; end
-
-  class AttractionRepresenter < Representable::Decorator
-    include Representable::JSON
-
-    property :name
-    property :short_name
-    property :permalink
-  end
-
-  class AttractionHashRepresenter < Representable::Decorator
-    include Representable::Hash
-    include Representable::Hash::AllowSymbols
-  
-    property :name
-    property :short_name
-    property :permalink
-  end
 
   PARK_KEYS = %i[magic_kingdom animal_kingdom epcot hollywood_studios].freeze
   # list interest at location
