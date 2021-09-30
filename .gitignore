@@ -7,9 +7,10 @@
 /spec/reports/
 /tmp/
 
-#custom for this gem
+## custom for this gem
 /Gemfile.lock
 /.tool-versions
+/touringplans-*.gem
 
 # rspec failure tracking
 .rspec_status

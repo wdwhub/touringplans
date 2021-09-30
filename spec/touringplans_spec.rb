@@ -17,7 +17,7 @@ RSpec.describe Touringplans do
       end
 
       it "supports listing attractions" do
-        expect(Touringplans.list("attractions", "Magic Kingdom").length).to eq(58)
+        expect(Touringplans.list("attractions", "Magic Kingdom").length).to eq(57)
       end
     end
     ########################
@@ -106,7 +106,7 @@ RSpec.describe Touringplans do
     end
 
     it "list all of the attractions in the parks" do
-      expect(Touringplans.list_all("attractions").length).to eq(164)
+      expect(Touringplans.list_all("attractions").length).to eq(163)
     end
 
     context "not" do
