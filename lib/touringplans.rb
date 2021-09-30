@@ -67,17 +67,17 @@ module Touringplans
 
     base_uri DEFAULT_BASE_URI
 
-    def initialize(options={})
+    def initialize(options = {})
       @api_version = options.fetch(:api_version, DEFAULT_API_VERSION)
       @query       = options.fetch(:query, DEFAULT_QUERY)
       @connection  = self.class
     end
 
-    def query(params={})
+    def query(params = {})
       @query.update(params)
     end
 
-    def get(relative_path, query={})
+    def get(relative_path, query = {})
       # relative_path = add_api_version(relative_path)
       connection.get relative_path, query: @query.merge(query)
     end
@@ -280,6 +280,41 @@ module Touringplans
     listings
   end
 
+  def self.list_all(interest_type)
+    return "The interest_type is not valid" unless %i[dining attractions].include? _symbolize(interest_type)
+
+    parks   = ["Magic Kingdom", "Animal Kingdom", "Epcot", "Hollywood Studios"]
+    places  = []
+
+    if interest_type == "attractions"
+      parks.each do |park|
+        list = Touringplans.list("attractions", park)
+        places << list
+      end
+    end
+
+    if interest_type == "dining"
+      parks.each do |park|
+        list = Touringplans.list("counter services", park)
+        places << list
+        list = Touringplans.list("table services", park)
+        places << list
+      end
+    end
+
+    places.flatten
+  end
+
+  def self.show(interest_type, short_name)
+    return "The interest_type is not valid" unless %i[dining attractions hotels].include? _symbolize(interest_type)
+
+    # get a list of every model of one kind of interest_type (dining, attractions, hotels)
+    places = list_all(interest_type)
+
+    # filter by short_name
+    places.find  { |place| place.short_name == short_name }
+  end
+
   def self._setup_client
     connection = Connection.new
     connection.query(key: "HowdyLen")
@@ -312,6 +347,7 @@ module Touringplans
 
   def self._collect_listing_hashes_from_response(interest, response)
     listing_hashes = response     if interest == "attractions"
+    listing_hashes = response     if interest == "dining"
     listing_hashes = response[0]  if interest == "counter services"
     listing_hashes = response[1]  if interest == "table services"
     listing_hashes
