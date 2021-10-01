@@ -64,8 +64,40 @@ RSpec.describe Touringplans do
     end
     ########################
     it "rejects the location if it is not a name of a wdw park" do
-      expect(Touringplans.list("attractions", "Great America")).to eq("The location is not a Disney park")
+      expect(Touringplans.list("attractions", "Great America")).to eq("The location is not on Disney property")
     end
+    ########################
+    context "at WDW hotels" do
+      it "supports the listing of all hotels" do
+        expect(Touringplans.list("hotels", "Walt Disney World").length).to eq(46)
+      end
+      
+      it "supports the listing of the campground" do
+        expect(Touringplans.list("campground", "Walt Disney World").length).to eq(1)
+      end
+# 
+      it "supports the listing of all deluxe hotels" do
+        expect(Touringplans.list("deluxe hotels", "Walt Disney World").length).to eq(13)
+      end
+
+      it "supports the listing of all deluxe_villas" do
+        expect(Touringplans.list("deluxe villas", "Walt Disney World").length).to eq(14)
+      end
+
+      it "supports the listing of all moderate hotels" do
+        expect(Touringplans.list("moderate hotels", "Walt Disney World").length).to eq(5)
+      end
+
+      it "supports the listing of all value hotels" do
+        expect(Touringplans.list("value hotels", "Walt Disney World").length).to eq(5)
+      end
+      
+      it "supports the listing of all disney springs resorts" do
+        expect(Touringplans.list("disney springs resorts", "Walt Disney World").length).to eq(8)
+      end
+      
+    end
+    
   end
 
   describe "#show" do

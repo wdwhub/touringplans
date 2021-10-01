@@ -52,7 +52,35 @@ module Touringplans
     hollywood_studios_attractions: {
       method: "get",
       path: "/hollywood-studios/attractions.json"
-    }
+    },
+    walt_disney_world_hotels: {
+      method: "get",
+      path: "/walt-disney-world/hotels.json"
+    },
+    walt_disney_world_campground: {
+      method: "get",
+      path: "/walt-disney-world/hotels.json"
+    },
+    walt_disney_world_deluxe_hotels: {
+      method: "get",
+      path: "/walt-disney-world/hotels.json"
+    },
+    walt_disney_world_deluxe_villas: {
+      method: "get",
+      path: "/walt-disney-world/hotels.json"
+    },
+    walt_disney_world_moderate_hotels: {
+      method: "get",
+      path: "/walt-disney-world/hotels.json"
+    },
+    walt_disney_world_value_hotels: {
+      method: "get",
+      path: "/walt-disney-world/hotels.json"
+    },
+    walt_disney_world_disney_springs_resorts: {
+      method: "get",
+      path: "/walt-disney-world/hotels.json"
+    },
   }
   # deals solely with how to create access to the resource, the lock of "lock & key"
   class Connection
@@ -256,13 +284,46 @@ module Touringplans
     attribute :permalink, Types::String
   end
 
-  PARK_KEYS = %i[magic_kingdom animal_kingdom epcot hollywood_studios].freeze
-  INTERESTS = %i[counter_services table_services attractions hotels].freeze
+  # model with the attributes
+  class Hotel < Dry::Struct
+    transform_keys(&:to_sym)
+
+    attribute :name, Types::String
+    attribute :sort_name, Types::String
+    attribute :permalink, Types::String
+    attribute :category_code, Types::String.optional
+  end
+
+  PLACE_KEYS          = %i[magic_kingdom 
+                          animal_kingdom 
+                          epcot 
+                          hollywood_studios 
+                          walt_disney_world
+                      ].freeze
+                      # {interest:"interest_type"}
+  INTERESTS           = %i[counter_services 
+                          table_services 
+                          attractions 
+                          hotels 
+                          campground
+                          deluxe_hotels
+                          deluxe_villas
+                          moderate_hotels
+                          value_hotels
+                          disney_springs_resorts
+                        ].freeze
+    HOTEL_CATEGORIES  = %i[campground 
+                          deluxe_hotels 
+                          deluxe_villas 
+                          moderate_hotels 
+                          value_hotels 
+                          disney_springs_resorts]
+
   # list interest at location
   # current interest are "counter service" "table service", and  "attractions"
   # current locations are the four parks
   def self.list(interest, location)
-    return "The location is not a Disney park" unless PARK_KEYS.include? _symbolize(location)
+    return "The location is not on Disney property" unless PLACE_KEYS.include? _symbolize(location)
     return "The interest is not valid"         unless INTERESTS.include? _symbolize(interest)
 
     client = _setup_client
@@ -272,16 +333,19 @@ module Touringplans
     response            = client.send(route).parsed_response
     listing_hashes      = _collect_listing_hashes_from_response(interest, response)
 
+    listing_hashes
     listing_hashes.each do |hash|
       listing = _set_model_from_hash(interest, hash)
       listings << listing
     end
 
+    listings = list_hotels_of_a_category(listings, interest) if HOTEL_CATEGORIES.include? _symbolize(interest)
+
     listings
   end
 
   def self.list_all(interest_type)
-    return "The interest_type is not valid" unless %i[dining attractions].include? _symbolize(interest_type)
+    return "The interest_type is not valid" unless %i[dining attractions hotels].include? _symbolize(interest_type)
 
     parks   = ["Magic Kingdom", "Animal Kingdom", "Epcot", "Hollywood Studios"]
     places  = []
@@ -330,12 +394,14 @@ module Touringplans
 
     interest_type = "dining" if interest == "counter services"
     interest_type = "dining" if interest == "table services"
+    interest_type = "hotels" if %i[campground deluxe_hotels deluxe_villas moderate_hotels value_hotels disney_springs_resorts
+                                  ].include? _symbolize(interest)
 
     interest_type
   end
 
   def self._symbolize(item)
-    # turn a Stringinto a symbol, like comparing to PARK_KEYS
+    # turn a Stringinto a symbol, like comparing to PLACE_KEYS
     item.to_s.downcase.gsub(" ", "_").to_sym
   end
 
@@ -346,17 +412,62 @@ module Touringplans
   end
 
   def self._collect_listing_hashes_from_response(interest, response)
+    hotel_categories = %i[campground deluxe_hotels deluxe_villas moderate_hotels value_hotels disney_springs_resorts]
+
     listing_hashes = response     if interest == "attractions"
     listing_hashes = response     if interest == "dining"
     listing_hashes = response[0]  if interest == "counter services"
     listing_hashes = response[1]  if interest == "table services"
+
+    listing_hashes = list_all_hotels(response) if interest == "hotels"
+    listing_hashes = list_all_hotels(response) if hotel_categories.include? _symbolize(interest)
+
     listing_hashes
   end
+  
+  def self.list_all_hotels(response_from_touringplans_hotels_url)
+    listing_hashes = []
 
+    response_from_touringplans_hotels_url.each do |child|
+      child.each do |grandchild|
+        if "#{grandchild.class}" == "Array"
+          listing_hashes << grandchild
+        end          
+      end
+    end
+
+    listing_hashes.flatten
+  end
+
+  # search for hotels of a category_code
+  def self.list_hotels_of_a_category(hotels, interest) 
+    hotel_categories = {campground:"campground", deluxe_hotels:"deluxe", 
+                    deluxe_villas:"deluxe_villa", moderate_hotels:"moderate", 
+                    value_hotels:"value", disney_springs_resorts: NilClass}
+    # get a list of every hotel model
+
+    # filter by category_code
+    # disney springs category code is null.  We need to find a rule for finding those that don't have any of the values of 
+    # hotel categories
+    if interest == "disney springs resorts"
+    target_hotels = hotels.find_all  { |hotel| hotel.category_code.class == NilClass }       
+      
+    else
+    target_hotels = hotels.find_all  { |hotel| hotel.category_code == hotel_categories[_symbolize(interest)] }       
+      
+    end
+
+    target_hotels
+  end
+  
+  
   def self._set_model_from_hash(interest, hash)
+    hotel_categories = %i[campground deluxe_hotels deluxe_villas moderate_hotels value_hotels disney_springs_resorts hotels]
+
     listing = CounterServiceLocation.new(hash)  if interest == "counter services"
     listing = TableServiceLocation.new(hash)    if interest == "table services"
     listing = ParkAttraction.new(hash)          if interest == "attractions"
+    listing = Hotel.new(hash)                   if hotel_categories.include? _symbolize(interest)
     listing
   end
 end
