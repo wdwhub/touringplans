@@ -12,6 +12,10 @@ RSpec.describe Touringplans do
         # expect(Touringplans.list("counter service", "Magic Kingdom")).to eq("something")
       end
 
+      it "adds the park name as the location of the counter service" do
+        expect(Touringplans.list("counter services", "Magic Kingdom").last.venue_permalink).to eq("magic-kingdom")        
+      end
+
       it "supports listing table service dining locations" do
         expect(Touringplans.list("table services", "Magic Kingdom").length).to eq(8)
       end
@@ -19,6 +23,11 @@ RSpec.describe Touringplans do
       it "supports listing attractions" do
         expect(Touringplans.list("attractions", "Magic Kingdom").length).to eq(57)
       end
+
+      it "adds the park name as the location of the attraction" do
+        expect(Touringplans.list("attractions", "Magic Kingdom").last.venue_permalink).to eq("magic-kingdom")        
+      end
+      
     end
     ########################
     context "at Animal Kingdom" do
@@ -31,7 +40,7 @@ RSpec.describe Touringplans do
       end
 
       it "supports listing attractions in Animal Kingdom" do
-        expect(Touringplans.list("attractions", "Animal Kingdom").length).to eq(41)
+        expect(Touringplans.list("attractions", "Animal Kingdom").length).to eq(42)
       end
     end
     ########################
@@ -45,7 +54,7 @@ RSpec.describe Touringplans do
       end
 
       it "supports listing attractions in Epcot" do
-        expect(Touringplans.list("attractions", "Epcot").length).to eq(35)
+        expect(Touringplans.list("attractions", "Epcot").length).to eq(36)
       end
     end
     ########################
@@ -138,7 +147,7 @@ RSpec.describe Touringplans do
     end
 
     it "list all of the attractions in the parks" do
-      expect(Touringplans.list_all("attractions").length).to eq(163)
+      expect(Touringplans.list_all("attractions").length).to eq(165)
     end
 
     context "not" do

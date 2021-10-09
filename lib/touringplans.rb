@@ -212,6 +212,7 @@ module Touringplans
     attribute :kosher_available, Types::Params::Bool
     attribute :dinable_id, Types::Params::Integer
     attribute :dinable_type, Types::String.optional
+    attribute :venue_permalink, Types::String.optional    
   end
 
   # model with the attributes
@@ -273,6 +274,7 @@ module Touringplans
     attribute :kosher_available, Types::Params::Bool
     attribute :dinable_id, Types::Params::Integer
     attribute :dinable_type, Types::String.optional
+    attribute :venue_permalink, Types::String.optional
   end
 
   # model with the attributes
@@ -282,6 +284,8 @@ module Touringplans
     attribute :name, Types::String
     attribute :short_name, Types::String
     attribute :permalink, Types::String
+    attribute :venue_permalink, Types::String
+    
   end
 
   # model with the attributes
@@ -292,6 +296,7 @@ module Touringplans
     attribute :sort_name, Types::String
     attribute :permalink, Types::String
     attribute :category_code, Types::String.optional
+    attribute :venue_permalink, Types::String.optional
   end
 
   PLACE_KEYS          = %i[magic_kingdom 
@@ -332,6 +337,9 @@ module Touringplans
     route               = _assemble_route(location, interest_type)
     response            = client.send(route).parsed_response
     listing_hashes      = _collect_listing_hashes_from_response(interest, response)
+    listing_hashes.each do |item|
+      item["venue_permalink"] =  location.to_s.downcase.gsub(" ", "-")
+    end
 
     listing_hashes
     listing_hashes.each do |hash|
