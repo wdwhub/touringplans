@@ -84,7 +84,7 @@ RSpec.describe Touringplans do
       it "supports the listing of the campground" do
         expect(Touringplans.list("campground", "Walt Disney World").length).to eq(1)
       end
-# 
+
       it "supports the listing of all deluxe hotels" do
         expect(Touringplans.list("deluxe hotels", "Walt Disney World").length).to eq(13)
       end
@@ -566,6 +566,78 @@ RSpec.describe Touringplans do
     end
   end
 
+  describe "#update_route_table" do
+    it "creates a yaml file name route_table.yml" do
+      
+    end
+    
+  end
+
+  describe "RoutesTable.update_file" do
+    it "does something" do
+      expect(Touringplans::RoutesTable.update_file).to eq("something")
+    end
+    
+  end
+
+  describe "RoutesTable._generate_interest_route" do
+    venue_permalink     = "magic-kingdom"
+    interest_permalink  = "attractions"
+    place_permalink     = "haunted-mansion"
+
+    it "creates a hash" do
+      expect(Touringplans::RoutesTable._generate_interest_route(venue_permalink, interest_permalink, place_permalink).class.to_s).to eq("Hash")
+    end
+    
+    it "creates one main key" do
+      expect(Touringplans::RoutesTable._generate_interest_route(venue_permalink, interest_permalink, place_permalink).keys.length).to eq(1)
+    end
+
+    it "creates a hash as a value for its key" do
+      expect(Touringplans::RoutesTable._generate_interest_route(venue_permalink, interest_permalink, place_permalink).values.first.class.to_s).to eq("Hash")
+    end
+    
+    it "creates a hash as a value for its key" do
+      expect(Touringplans::RoutesTable._generate_interest_route(venue_permalink, interest_permalink, place_permalink).values.first.class.to_s).to eq("Hash")
+    end
+    
+  end
+  
+  describe "RoutesTable._generate_interest_routes_hash(interest)" do
+    interest  = "attractions"
+    attractions_hash  = Touringplans::RoutesTable._generate_interest_routes_hash("attractions")
+    dining_hash       = Touringplans::RoutesTable._generate_interest_routes_hash("dining")
+    hotels_hash       = Touringplans::RoutesTable._generate_interest_routes_hash("hotels")
+
+    it "creates a hash" do
+      expect(attractions_hash.class.to_s).to eq("Hash")
+    end
+    
+    it "creates many route keys" do
+      expect(attractions_hash.keys.length).to eq(165)
+    end
+
+    it "creates a hash of routes for 'attractions'" do
+      expect(attractions_hash.keys.length).to eq(165)
+    end
+    
+    it "creates a hash of routes for 'dining'" do
+      expect(dining_hash.keys.length).to eq(87)
+    end
+
+    it "creates a hash of routes for 'hotels'" do
+      pending("waiting for list_all for hotels to finish")
+      expect(hotels_hash.keys.length).to eq(165)
+    end
+    
+  end
+  
+  describe "RoutesTable._convert_hash_to_yaml" do
+    hash = Touringplans.routes
+    
+    
+  end
+
   describe "._determine_interest_type" do
     it "sets interest_type to 'dining' when the interest is 'counter service'" do
       expect(Touringplans._determine_interest_type("counter services")).to eq("dining")
@@ -599,4 +671,6 @@ RSpec.describe Touringplans do
       end
     end
   end
+
+  
 end

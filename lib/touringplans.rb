@@ -82,6 +82,11 @@ module Touringplans
       path: "/walt-disney-world/hotels.json"
     },
   }
+
+  def self.routes
+    ROUTES
+  end
+  
   # deals solely with how to create access to the resource, the lock of "lock & key"
   class Connection
     # concerned only on where it gets the info it needs
@@ -153,6 +158,81 @@ module Touringplans
     end
   end
 
+  class RoutesTable
+    def initialize(filename: "routes_table.yml")      
+      @filename         = filename
+    end
+    
+    def self.original_routes
+      Touringplans.routes
+    end
+    
+    def self.update_file
+      # gather info into hashes
+      attractions_routes    = _generate_interest_routes_hash("attractions")
+      dining_routes         = _generate_interest_routes_hash("dining")
+      # hotels_routes         = _generate_interest_routes_hash("hotels")
+      updated_routes        = original_routes.merge(attractions_routes, dining_routes)#, hotels_routes)
+
+      # updated_routes_yaml   = _convert_hash_to_yaml(updated_routes)
+
+      # file = _initialize_file
+      # _save_to_file(updated_routes_yaml)
+      # _read_file_to_terminal(file)
+    end
+
+    def _initialize_file
+      # delete old file if it exits
+
+      # create new file
+    end
+
+    def self._generate_interest_routes_hash(interest)
+      interest_venues = Touringplans.list_all(interest)
+      interest_routes = {}
+
+      interest_venues.each do |iv|
+        new_route = self._generate_interest_route(iv.venue_permalink, interest, iv.permalink)
+        key = new_route.keys.first
+        values = new_route[key]
+        interest_routes[key] = values
+      end
+
+      interest_routes
+    end
+    
+    def self._generate_interest_route(venue_permalink, interest_permalink, place_permalink)
+      # {magic_kingdom_attractions_haunted_mansion: {
+      #   method: "get",
+      #   path: "/magic-kingdom/attractions/haunted-mansion.json"
+      #   }
+      # }
+      path = "/#{venue_permalink}/#{interest_permalink}/#{place_permalink}"
+      key = Touringplans._symbolize(path)
+      method = "get"
+      format = "json"
+
+      hash = { key => { method: "get",
+                        path: "#{path}.#{format}"
+                      }
+      }
+
+      hash
+    end
+
+    def _convert_hash_to_yaml(routes_hash)
+      
+    end
+
+    def _save_to_file(content)
+      
+    end
+    
+    def _read_file_to_terminal(file)
+      
+    end
+    
+  end
   # model with the attributes
   class CounterServiceLocation < Dry::Struct
     transform_keys(&:to_sym)
@@ -409,8 +489,11 @@ module Touringplans
   end
 
   def self._symbolize(item)
-    # turn a Stringinto a symbol, like comparing to PLACE_KEYS
-    item.to_s.downcase.gsub(" ", "_").to_sym
+    ## turn a Stringinto a symbol, like comparing to PLACE_KEYS
+    # if item is a path or name we need to turn it into a phrase of words
+    str = item.to_s.downcase.gsub("/", " ").gsub("-", " ").strip
+    # turn item into a symbol
+    str.gsub(" ", "_").to_sym
   end
 
   def self._assemble_route(location, interest_type)
@@ -466,6 +549,11 @@ module Touringplans
     end
 
     target_hotels
+  end
+  
+  def generate_route_table
+    # initial_routes = ROUTES
+
   end
   
   
