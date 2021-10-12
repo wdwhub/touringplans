@@ -159,6 +159,7 @@ module Touringplans
   end
 
   class RoutesTable
+    require 'fileutils'
     def initialize(filename: "routes_table.yml")      
       @filename         = filename
     end
@@ -167,6 +168,28 @@ module Touringplans
       Touringplans.routes
     end
     
+    def self.symbolize_keys(hash)
+      # https://avdi.codes/recursively-symbolize-keys/
+      hash.inject({}){|result, (key, value)|
+        new_key = case key
+                  when String then key.to_sym
+                  else key
+                  end
+        new_value = case value
+                    when Hash then symbolize_keys(value)
+                    else value
+                    end
+        result[new_key] = new_value
+        result
+      }
+    end  
+
+    def self.load_routes_file(relative_file_path: "/lib/routes.yml")
+        routes_file = FileUtils.getwd() + relative_file_path
+        YAML.load(File.read(routes_file))
+    end
+    
+    
     def self.update_file
       # gather info into hashes
       attractions_routes    = _generate_interest_routes_hash("attractions")
@@ -174,17 +197,21 @@ module Touringplans
       # hotels_routes         = _generate_interest_routes_hash("hotels")
       updated_routes        = original_routes.merge(attractions_routes, dining_routes)#, hotels_routes)
 
-      # updated_routes_yaml   = _convert_hash_to_yaml(updated_routes)
+      updated_routes_yaml   = _convert_hash_to_yaml(updated_routes)
 
-      # file = _initialize_file
-      # _save_to_file(updated_routes_yaml)
-      # _read_file_to_terminal(file)
+      file = _initialize_file
+      _save_content_to_file(file, updated_routes_yaml)
     end
 
-    def _initialize_file
+    def self._initialize_file
       # delete old file if it exits
+      lib_dir     =  FileUtils.getwd() + "/lib"
+      routes_file = "#{lib_dir}/routes.yml"
 
+      FileUtils.rm(routes_file, force: true)
       # create new file
+      touched_routes_file_array = FileUtils.touch(routes_file)
+      touched_routes_file = touched_routes_file_array.first
     end
 
     def self._generate_interest_routes_hash(interest)
@@ -207,29 +234,33 @@ module Touringplans
       #   path: "/magic-kingdom/attractions/haunted-mansion.json"
       #   }
       # }
-      path = "/#{venue_permalink}/#{interest_permalink}/#{place_permalink}"
-      key = Touringplans._symbolize(path)
-      method = "get"
-      format = "json"
+      path    = "/#{venue_permalink}/#{interest_permalink}/#{place_permalink}"
+      key     = path.to_s.downcase.gsub("/", " ").gsub("-", " ").strip
+      key     = key.gsub(" ", "_")
+      method  = "get"
+      format  = "json"
 
-      hash = { key => { method: "get",
-                        path: "#{path}.#{format}"
+      hash = { key => { "method".to_s  => "get",
+                        "path".to_s    => "#{path}.#{format}"
                       }
       }
 
       hash
     end
 
-    def _convert_hash_to_yaml(routes_hash)
-      
+    def self._convert_hash_to_yaml(hash)
+      hash.to_yaml
     end
 
-    def _save_to_file(content)
-      
+    def self._save_content_to_file(file, content)
+      new_file = File.open(file, "w")
+      new_file.write(content)
+      new_file.close
     end
     
-    def _read_file_to_terminal(file)
-      
+    def self._read_file_to_terminal(file)
+      new_file = File.open(file, "r")
+      new_file.close
     end
     
   end
@@ -470,7 +501,9 @@ module Touringplans
   def self._setup_client
     connection = Connection.new
     connection.query(key: "HowdyLen")
+    # routes = Touringplans::RoutesTable.load_routes_file    
     Client.new(connection: connection, routes: ROUTES)
+
   end
 
   def self._format_location_name(location_name)
@@ -493,9 +526,11 @@ module Touringplans
     # if item is a path or name we need to turn it into a phrase of words
     str = item.to_s.downcase.gsub("/", " ").gsub("-", " ").strip
     # turn item into a symbol
-    str.gsub(" ", "_").to_sym
+    str = str.gsub(" ", "_")
+    str.to_sym
   end
 
+  
   def self._assemble_route(location, interest_type)
     formatted_location      = location.to_s.downcase.gsub(" ", "_")
     formatted_interest_type = interest_type.to_s.downcase.gsub(" ", "_")

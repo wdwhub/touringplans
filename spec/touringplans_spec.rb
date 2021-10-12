@@ -573,36 +573,108 @@ RSpec.describe Touringplans do
     
   end
 
-  describe "RoutesTable.update_file" do
-    it "does something" do
-      expect(Touringplans::RoutesTable.update_file).to eq("something")
+  describe "RoutesTable" do
+    context "when updating the route.yml file" do
+      Touringplans::RoutesTable.update_file
+
+      # read file to inspect the contents
+      lib_dir     =  FileUtils.getwd() + "/lib"
+      routes_file = "#{lib_dir}/routes.yml"
+      file_to_read = File.open(routes_file, "r")
+      contents = file_to_read.read
+      file_to_read.close
+      
+      it "does something" do
+        expect(contents).to eq("something")
+      end      
+    end
+    
+    context "when generating an interest route" do
+      venue_permalink     = "magic-kingdom"
+      interest_permalink  = "attractions"
+      place_permalink     = "haunted-mansion"
+      resulting_hash      = Touringplans::RoutesTable._generate_interest_route(venue_permalink, interest_permalink, place_permalink)
+      it "creates a hash" do
+        expect(resulting_hash.class.to_s).to eq("Hash")
+      end
+      
+      it "creates one main key" do
+        expect(resulting_hash.keys.length).to eq(1)
+      end
+
+      it "has a string for its one main key" do
+        expect(resulting_hash.keys.first.class.to_s).to eq("String")
+      end
+
+      it "creates a hash as a value for its key" do
+        expect(resulting_hash.values.first.class.to_s).to eq("Hash")
+      end
+      
+    end
+
+    context "when initializing the routes.yml file" do
+      it "supports creating a blank routes.yml file in lib dir" do
+        expect(Touringplans::RoutesTable._initialize_file).to include("lib\/routes.yml")
+      end
+
+      it "returns the full path of the file as a string" do
+        expect(Touringplans::RoutesTable._initialize_file.class.to_s).to eq("String")
+      end
+    end
+
+    context "when saving content to the routes.yml file" do
+      file = Touringplans::RoutesTable._initialize_file
+      updated_routes_yaml = Touringplans.routes.to_yaml
+      Touringplans::RoutesTable._save_content_to_file(file, updated_routes_yaml)
+      # read file to inspect the contents
+      file_to_read = File.open(file, "r")
+      contents = file_to_read.read
+      file_to_read.close
+
+      it "supports adding content as a string" do
+        expect(contents.class.to_s).to eq("String")
+      end
+
+      it "supports adding content as a string" do
+        expect(contents).to include("magic_kingdom_dining")
+      end
+      
+    end
+    
+    context "converting a hash to yaml" do
+      hash = Touringplans.routes
+      it "returns the routes in a yaml format" do
+        expect(Touringplans::RoutesTable._convert_hash_to_yaml(hash).class.to_s).to eq("String")
+      end
+    end
+
+    context "loading routes.yml" do
+
+      result = Touringplans::RoutesTable.load_routes_file
+
+      it "returns a hash" do
+        expect(result.class.to_s).to eq("Hash")        
+      end
+      
+      it "returns a symbol as the key for a route" do
+        expect(result.first.first.class.to_s).to eq("Symbol")        
+      end
+      
+      it "returns a hash as the value for a route" do
+        expect(result.fetch(:magic_kingdom_dining, "not found").class.to_s).to eq("Hash")        
+      end
+      
+      it "returns a path as a value for a route" do
+        expect(result.fetch(:magic_kingdom_dining, "not found").fetch(:path).class.to_s).to eq("String")        
+      end
+      
+      it "returns a method of 'get' as a value for a route" do
+        expect(result.fetch(:magic_kingdom_dining, "not found").fetch(:method)).to eq("get")        
+      end
     end
     
   end
 
-  describe "RoutesTable._generate_interest_route" do
-    venue_permalink     = "magic-kingdom"
-    interest_permalink  = "attractions"
-    place_permalink     = "haunted-mansion"
-
-    it "creates a hash" do
-      expect(Touringplans::RoutesTable._generate_interest_route(venue_permalink, interest_permalink, place_permalink).class.to_s).to eq("Hash")
-    end
-    
-    it "creates one main key" do
-      expect(Touringplans::RoutesTable._generate_interest_route(venue_permalink, interest_permalink, place_permalink).keys.length).to eq(1)
-    end
-
-    it "creates a hash as a value for its key" do
-      expect(Touringplans::RoutesTable._generate_interest_route(venue_permalink, interest_permalink, place_permalink).values.first.class.to_s).to eq("Hash")
-    end
-    
-    it "creates a hash as a value for its key" do
-      expect(Touringplans::RoutesTable._generate_interest_route(venue_permalink, interest_permalink, place_permalink).values.first.class.to_s).to eq("Hash")
-    end
-    
-  end
-  
   describe "RoutesTable._generate_interest_routes_hash(interest)" do
     interest  = "attractions"
     attractions_hash  = Touringplans::RoutesTable._generate_interest_routes_hash("attractions")
@@ -632,11 +704,6 @@ RSpec.describe Touringplans do
     
   end
   
-  describe "RoutesTable._convert_hash_to_yaml" do
-    hash = Touringplans.routes
-    
-    
-  end
 
   describe "._determine_interest_type" do
     it "sets interest_type to 'dining' when the interest is 'counter service'" do
