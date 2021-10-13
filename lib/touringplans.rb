@@ -82,6 +82,11 @@ module Touringplans
       path: "/walt-disney-world/hotels.json"
     },
   }
+
+  def self.routes
+    ROUTES
+  end
+  
   # deals solely with how to create access to the resource, the lock of "lock & key"
   class Connection
     # concerned only on where it gets the info it needs
@@ -153,6 +158,136 @@ module Touringplans
     end
   end
 
+  class RoutesTable
+    require 'fileutils'
+    def initialize(filename: "routes_table.yml")      
+      @filename         = filename
+    end
+    
+    def self.original_routes
+      # this method exists so that we can create a yaml file of routes
+      tpr = Touringplans.routes
+      # convert symbols back to strings
+      stringify_keys(tpr)
+      # rt_keys       = tpr.keys
+      # rt_values     = tpr.values
+      # string_keys   = []
+
+      # rt_keys.each {|k| string_keys << k.to_s}
+      # # create new hash with string keys
+      # string_keys.zip(rt_values).to_h
+    end
+    
+    def self.symbolize_keys(hash)
+      hash.inject({}){|result, (key, value)|
+        new_key = case key
+                  when String then key.to_sym
+                  else key
+                  end
+        new_value = case value
+                    when Hash then symbolize_keys(value)
+                    else value
+                    end
+        result[new_key] = new_value
+        result
+      }
+    end
+
+    def self.stringify_keys(hash)
+      # inspired by https://avdi.codes/recursively-symbolize-keys/
+      hash.inject({}){|result, (key, value)|
+        new_key = case key
+                  when Symbol then key.to_s
+                  else key
+                  end
+        new_value = case value
+                    when Hash then stringify_keys(value)
+                    else value
+                    end
+        result[new_key] = new_value
+        result
+      }
+    end  
+
+    def self.load_routes_file(relative_file_path: "/lib/routes.yml")
+        routes_file = FileUtils.getwd() + relative_file_path
+        YAML.load(File.read(routes_file))
+    end
+    
+    
+    def self.update_file
+      # gather info into hashes
+      attractions_routes    = _generate_interest_routes_hash("attractions")
+      dining_routes         = _generate_interest_routes_hash("dining")
+      hotels_routes         = {} #_generate_interest_routes_hash("hotels")
+      updated_routes        = original_routes.merge(attractions_routes, dining_routes, hotels_routes)
+
+      updated_routes_yaml   = _convert_hash_to_yaml(updated_routes)
+
+      file = _initialize_file
+      _save_content_to_file(file, updated_routes_yaml)
+    end
+
+    def self._initialize_file
+      # delete old file if it exits
+      lib_dir     =  FileUtils.getwd() + "/lib"
+      routes_file = "#{lib_dir}/routes.yml"
+
+      # ensure the file exists
+      touched_routes_file_array = FileUtils.touch(routes_file)
+      touched_routes_file = touched_routes_file_array.first
+    end
+
+    def self._generate_interest_routes_hash(interest)
+      interest_venues = Touringplans.list_all(interest)
+      interest_routes = {}
+
+      interest_venues.each do |iv|
+        new_route = self._generate_interest_route(iv.venue_permalink, interest, iv.permalink)
+        key = new_route.keys.first
+        values = new_route[key]
+        interest_routes[key] = values
+      end
+
+      interest_routes
+    end
+    
+    def self._generate_interest_route(venue_permalink, interest_permalink, place_permalink)
+      # {magic_kingdom_attractions_haunted_mansion: {
+      #   method: "get",
+      #   path: "/magic-kingdom/attractions/haunted-mansion.json"
+      #   }
+      # }
+      path    = "/#{venue_permalink}/#{interest_permalink}/#{place_permalink}"
+      key     = path.to_s.downcase.gsub("/", " ").gsub("-", " ").strip
+      key     = key.gsub(" ", "_")
+      method  = "get"
+      format  = "json"
+
+      hash = { key => { "method".to_s  => "get",
+                        "path".to_s    => "#{path}.#{format}"
+                      }
+      }
+
+      hash
+    end
+
+    def self._convert_hash_to_yaml(hash)
+      hash.to_yaml
+    end
+
+    def self._save_content_to_file(file, content)
+      new_file = File.open(file, "w")
+      new_file.write(content)
+      new_file.close
+    end
+    
+    def self._read_file_to_terminal(file)
+      new_file = File.open(file, "r")
+      new_file.close
+    end
+    
+  end
   # model with the attributes
   class CounterServiceLocation < Dry::Struct
     transform_keys(&:to_sym)
@@ -374,6 +509,13 @@ module Touringplans
       end
     end
 
+    if interest_type == "hotels"
+      HOTEL_CATEGORIES.each do |category|
+        list = Touringplans.list(category.to_s, "walt_disney_world")
+        places << list
+      end
+    end
+
     places.flatten
   end
 
@@ -390,7 +532,9 @@ module Touringplans
   def self._setup_client
     connection = Connection.new
     connection.query(key: "HowdyLen")
-    Client.new(connection: connection, routes: ROUTES)
+    routes = Touringplans::RoutesTable.symbolize_keys(Touringplans::RoutesTable.load_routes_file)   
+    Client.new(connection: connection, routes: routes)
+
   end
 
   def self._format_location_name(location_name)
@@ -409,10 +553,15 @@ module Touringplans
   end
 
   def self._symbolize(item)
-    # turn a Stringinto a symbol, like comparing to PLACE_KEYS
-    item.to_s.downcase.gsub(" ", "_").to_sym
+    ## turn a Stringinto a symbol, like comparing to PLACE_KEYS
+    # if item is a path or name we need to turn it into a phrase of words
+    str = item.to_s.downcase.gsub("/", " ").gsub("-", " ").strip
+    # turn item into a symbol
+    str = str.gsub(" ", "_")
+    str.to_sym
   end
 
+  
   def self._assemble_route(location, interest_type)
     formatted_location      = location.to_s.downcase.gsub(" ", "_")
     formatted_interest_type = interest_type.to_s.downcase.gsub(" ", "_")
@@ -466,6 +615,11 @@ module Touringplans
     end
 
     target_hotels
+  end
+  
+  def generate_route_table
+    # initial_routes = ROUTES
+
   end
   
   
