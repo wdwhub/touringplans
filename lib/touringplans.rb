@@ -509,6 +509,13 @@ module Touringplans
       end
     end
 
+    if interest_type == "hotels"
+      HOTEL_CATEGORIES.each do |category|
+        list = Touringplans.list(category.to_s, "walt_disney_world")
+        places << list
+      end
+    end
+
     places.flatten
   end
 

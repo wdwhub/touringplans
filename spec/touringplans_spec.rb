@@ -779,6 +779,10 @@ RSpec.describe Touringplans do
       expect(Touringplans.list_all("attractions").length).to eq(165)
     end
 
+    it "list all of the hotels at Walt Disney World" do
+      expect(Touringplans.list_all("hotels").length).to eq(38)
+    end
+
     context "not" do
       it "list just the counter services" do
         expect(Touringplans.list_all("counter services")).to eq("The interest_type is not valid")
