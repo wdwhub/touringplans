@@ -12,6 +12,8 @@ module Touringplans
     include Dry.Types()
   end
 
+  GEM_ROOT = File.expand_path("../", __FILE__)
+  
   include HTTParty
   # currently Touring Plans has no verision in its API
   DEFAULT_API_VERSION = "1"
@@ -209,8 +211,12 @@ module Touringplans
       }
     end  
 
-    def self.load_routes_file(relative_file_path: "/lib/routes.yml")
-        routes_file = FileUtils.getwd() + relative_file_path
+    def self.load_routes_file(routes_relative_file_path: "/lib/routes.yml")
+        tp_path = $LOAD_PATH.grep(/touringplans/).first.split("/")
+        tp_path.reject! {|k| k=="lib"}
+        tp_path.reject! {|k| k=="spec"}
+        tp_path = tp_path.join("/")
+        routes_file = "#{tp_path}#{routes_relative_file_path}"
         YAML.load(File.read(routes_file))
     end
     
