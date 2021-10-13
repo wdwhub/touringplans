@@ -165,11 +165,20 @@ module Touringplans
     end
     
     def self.original_routes
-      Touringplans.routes
+      # this method exists so that we can create a yaml file of routes
+      tpr = Touringplans.routes
+      # convert symbols back to strings
+      stringify_keys(tpr)
+      # rt_keys       = tpr.keys
+      # rt_values     = tpr.values
+      # string_keys   = []
+
+      # rt_keys.each {|k| string_keys << k.to_s}
+      # # create new hash with string keys
+      # string_keys.zip(rt_values).to_h
     end
     
     def self.symbolize_keys(hash)
-      # https://avdi.codes/recursively-symbolize-keys/
       hash.inject({}){|result, (key, value)|
         new_key = case key
                   when String then key.to_sym
@@ -177,6 +186,22 @@ module Touringplans
                   end
         new_value = case value
                     when Hash then symbolize_keys(value)
+                    else value
+                    end
+        result[new_key] = new_value
+        result
+      }
+    end
+
+    def self.stringify_keys(hash)
+      # inspired by https://avdi.codes/recursively-symbolize-keys/
+      hash.inject({}){|result, (key, value)|
+        new_key = case key
+                  when Symbol then key.to_s
+                  else key
+                  end
+        new_value = case value
+                    when Hash then stringify_keys(value)
                     else value
                     end
         result[new_key] = new_value
@@ -194,8 +219,8 @@ module Touringplans
       # gather info into hashes
       attractions_routes    = _generate_interest_routes_hash("attractions")
       dining_routes         = _generate_interest_routes_hash("dining")
-      # hotels_routes         = _generate_interest_routes_hash("hotels")
-      updated_routes        = original_routes.merge(attractions_routes, dining_routes)#, hotels_routes)
+      hotels_routes         = {} #_generate_interest_routes_hash("hotels")
+      updated_routes        = original_routes.merge(attractions_routes, dining_routes, hotels_routes)
 
       updated_routes_yaml   = _convert_hash_to_yaml(updated_routes)
 
@@ -208,8 +233,7 @@ module Touringplans
       lib_dir     =  FileUtils.getwd() + "/lib"
       routes_file = "#{lib_dir}/routes.yml"
 
-      FileUtils.rm(routes_file, force: true)
-      # create new file
+      # ensure the file exists
       touched_routes_file_array = FileUtils.touch(routes_file)
       touched_routes_file = touched_routes_file_array.first
     end
@@ -501,8 +525,8 @@ module Touringplans
   def self._setup_client
     connection = Connection.new
     connection.query(key: "HowdyLen")
-    # routes = Touringplans::RoutesTable.load_routes_file    
-    Client.new(connection: connection, routes: ROUTES)
+    routes = Touringplans::RoutesTable.symbolize_keys(Touringplans::RoutesTable.load_routes_file)   
+    Client.new(connection: connection, routes: routes)
 
   end
 

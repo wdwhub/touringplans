@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 RSpec.describe Touringplans do
+  # ensure we have a current routing table
+  # if we don't we will get a cryptic error:
+  # undefined method `inject' for false:FalseClass
+  # Touringplans::RoutesTable.update_file
   it "has a version number" do
     expect(Touringplans::VERSION).not_to be nil
   end
@@ -574,20 +578,24 @@ RSpec.describe Touringplans do
   end
 
   describe "RoutesTable" do
-    context "when updating the route.yml file" do
-      Touringplans::RoutesTable.update_file
+    # context "when updating the route.yml file" do
+    #   Touringplans::RoutesTable.update_file
 
-      # read file to inspect the contents
-      lib_dir     =  FileUtils.getwd() + "/lib"
-      routes_file = "#{lib_dir}/routes.yml"
-      file_to_read = File.open(routes_file, "r")
-      contents = file_to_read.read
-      file_to_read.close
+    #   # read file to inspect the contents
+    #   lib_dir     =  FileUtils.getwd() + "/lib"
+    #   routes_file = "#{lib_dir}/routes.yml"
+    #   file_to_read = File.open(routes_file, "r")
+    #   contents = file_to_read.read
+    #   file_to_read.close
       
-      it "does something" do
-        expect(contents).to eq("something")
-      end      
-    end
+
+    #   it "writes a route to the routes_file" do
+    #     Touringplans::RoutesTable.update_file
+    #     routes = Touringplans::RoutesTable.symbolize_keys(Touringplans::RoutesTable.load_routes_file)   
+
+    #     expect(routes.fetch(:magic_kingdom_dining, "not found")).to eq({:method=>"get", :path=>"/magic-kingdom/dining.json"})
+    #   end      
+    # end
     
     context "when generating an interest route" do
       venue_permalink     = "magic-kingdom"
@@ -622,24 +630,32 @@ RSpec.describe Touringplans do
       end
     end
 
-    context "when saving content to the routes.yml file" do
-      file = Touringplans::RoutesTable._initialize_file
-      updated_routes_yaml = Touringplans.routes.to_yaml
-      Touringplans::RoutesTable._save_content_to_file(file, updated_routes_yaml)
-      # read file to inspect the contents
-      file_to_read = File.open(file, "r")
-      contents = file_to_read.read
-      file_to_read.close
+    # context "when saving content to the routes.yml file" do
+    #  ###*** this needs to be simplified
+    #   tpr = Touringplans::RoutesTable
+    #   # gather info into hashes
+    #   attractions_routes    = tpr._generate_interest_routes_hash("attractions")
+    #   dining_routes         = tpr._generate_interest_routes_hash("dining")
+    #   hotels_routes         = {} #tpr._generate_interest_routes_hash("hotels")
+    #   updated_routes        = tpr.original_routes.merge(attractions_routes, dining_routes, hotels_routes)
 
-      it "supports adding content as a string" do
-        expect(contents.class.to_s).to eq("String")
-      end
+    #   updated_routes_yaml   = tpr._convert_hash_to_yaml(updated_routes)
 
-      it "supports adding content as a string" do
-        expect(contents).to include("magic_kingdom_dining")
-      end
+    #   Touringplans::RoutesTable._save_content_to_file(file, updated_routes_yaml)
+    #   # read file to inspect the contents
+    #   file_to_read = File.open(file, "r")
+    #   contents = file_to_read.read
+    #   file_to_read.close
+
+    #   it "supports adding content as a string" do
+    #     expect(contents.class.to_s).to eq("String")
+    #   end
+
+    #   it "supports adding content as a string" do
+    #     expect(contents).to include("magic_kingdom_dining")
+    #   end
       
-    end
+    # end
     
     context "converting a hash to yaml" do
       hash = Touringplans.routes
@@ -649,28 +665,63 @@ RSpec.describe Touringplans do
     end
 
     context "loading routes.yml" do
-
+      Touringplans::RoutesTable.update_file
       result = Touringplans::RoutesTable.load_routes_file
 
+      # it "something" do
+      #   expect(result).to eq("something")        
+      # end
+      
       it "returns a hash" do
         expect(result.class.to_s).to eq("Hash")        
       end
       
-      it "returns a symbol as the key for a route" do
-        expect(result.first.first.class.to_s).to eq("Symbol")        
+      it "returns a string as the key for a route" do
+        expect(result.first.first.class.to_s).to eq("String")        
       end
       
-      it "returns a hash as the value for a route" do
-        expect(result.fetch(:magic_kingdom_dining, "not found").class.to_s).to eq("Hash")        
+      it "returns a hash as the value for a listing route" do
+        expect(result.fetch("magic_kingdom_dining", "not found").class.to_s).to eq("Hash")        
       end
       
-      it "returns a path as a value for a route" do
-        expect(result.fetch(:magic_kingdom_dining, "not found").fetch(:path).class.to_s).to eq("String")        
+      it "returns a path as a value for a listing route" do
+        expect(result.fetch("magic_kingdom_dining", "not found").fetch("path").class.to_s).to eq("String")        
       end
       
-      it "returns a method of 'get' as a value for a route" do
-        expect(result.fetch(:magic_kingdom_dining, "not found").fetch(:method)).to eq("get")        
+      it "returns a method of 'get' as a value for a listing route" do
+        expect(result.fetch("magic_kingdom_dining", "not found").fetch("method")).to eq("get")        
       end
+
+      it "returns a hash as the value for a dining route" do
+        expect(result.fetch("hollywood_studios_dining_roundup_rodeo_bbq", "not found").class.to_s).to eq("Hash")        
+      end
+      
+      it "returns a path as a value for a dining route" do
+        expect(result.fetch("hollywood_studios_dining_roundup_rodeo_bbq", "not found").fetch("path").class.to_s).to eq("String")        
+      end
+      
+      it "returns a method of 'get' as a value for a dining route" do
+        expect(result.fetch("hollywood_studios_dining_roundup_rodeo_bbq", "not found").fetch("method")).to eq("get")        
+      end
+
+      # hollywood_studios_dining_roundup_rodeo_bbq
+    end
+    
+    context "rendering orginal_routes without keys" do
+      subject = Touringplans::RoutesTable.original_routes
+      # it "returns something" do
+      #   expect(subject).to eq("something") 
+      # end
+      
+      it "returns a hash" do
+        expect(subject.class.to_s).to  eq("Hash")
+      end
+
+      it "returns a hash key that is the string 'magic_kingdom_attractions'" do
+        expect(subject.fetch("magic_kingdom_attractions", "not found").fetch("path", "not found")).to eq("/magic-kingdom/attractions.json") 
+      end
+      
+      
     end
     
   end
