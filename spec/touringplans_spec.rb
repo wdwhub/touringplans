@@ -749,8 +749,7 @@ RSpec.describe Touringplans do
     end
 
     it "creates a hash of routes for 'hotels'" do
-      pending("waiting for list_all for hotels to finish")
-      expect(hotels_hash.keys.length).to eq(165)
+      expect(hotels_hash.keys.length).to eq(38)
     end
     
   end
