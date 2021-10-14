@@ -58,7 +58,7 @@ RSpec.describe Touringplans do
       end
 
       it "supports listing attractions in Epcot" do
-        expect(Touringplans.list("attractions", "Epcot").length).to eq(36)
+        expect(Touringplans.list("attractions", "Epcot").length).to eq(37)
       end
     end
     ########################
@@ -737,11 +737,11 @@ RSpec.describe Touringplans do
     end
     
     it "creates many route keys" do
-      expect(attractions_hash.keys.length).to eq(165)
+      expect(attractions_hash.keys.length).to eq(166)
     end
 
     it "creates a hash of routes for 'attractions'" do
-      expect(attractions_hash.keys.length).to eq(165)
+      expect(attractions_hash.keys.length).to eq(166)
     end
     
     it "creates a hash of routes for 'dining'" do
@@ -775,7 +775,7 @@ RSpec.describe Touringplans do
     end
 
     it "list all of the attractions in the parks" do
-      expect(Touringplans.list_all("attractions").length).to eq(165)
+      expect(Touringplans.list_all("attractions").length).to eq(166)
     end
 
     it "list all of the hotels at Walt Disney World" do
