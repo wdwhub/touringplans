@@ -12,7 +12,6 @@ module Touringplans
     include Dry.Types()
   end
 
-  
   ROUTES = {
     magic_kingdom_dining: {
       method: "get",
@@ -73,13 +72,13 @@ module Touringplans
     walt_disney_world_disney_springs_resorts: {
       method: "get",
       path: "/walt-disney-world/hotels.json"
-    },
-  }
+    }
+  }.freeze
 
   def self.routes
     ROUTES
   end
-  
+
   # deals solely with how to create access to the resource, the lock of "lock & key"
   class Connection
     # concerned only on where it gets the info it needs
@@ -89,6 +88,7 @@ module Touringplans
     # currently Touring Plans has no verision in its API
     DEFAULT_API_VERSION = "1"
     DEFAULT_BASE_URI  = "https://touringplans.com/"
+    # do not freeze DEFAULT_QUERY
     DEFAULT_QUERY     = {}
 
     base_uri DEFAULT_BASE_URI
@@ -151,12 +151,13 @@ module Touringplans
     end
   end
 
+  # Generates and updates routes for all types of venues in a YAML document.
   class RoutesTable
-    require 'fileutils'
-    def initialize(filename: "routes_table.yml")      
-      @filename         = filename
+    require "fileutils"
+    def initialize(filename: "routes_table.yml")
+      @filename = filename
     end
-    
+
     def self.original_routes
       # this method exists so that we can create a yaml file of routes
       tpr = Touringplans.routes
@@ -170,9 +171,9 @@ module Touringplans
       # # create new hash with string keys
       # string_keys.zip(rt_values).to_h
     end
-    
+
     def self.symbolize_keys(hash)
-      hash.inject({}){|result, (key, value)|
+      hash.each_with_object({}) do |(key, value), result|
         new_key = case key
                   when String then key.to_sym
                   else key
@@ -182,13 +183,12 @@ module Touringplans
                     else value
                     end
         result[new_key] = new_value
-        result
-      }
+      end
     end
 
     def self.stringify_keys(hash)
       # inspired by https://avdi.codes/recursively-symbolize-keys/
-      hash.inject({}){|result, (key, value)|
+      hash.each_with_object({}) do |(key, value), result|
         new_key = case key
                   when Symbol then key.to_s
                   else key
@@ -198,22 +198,20 @@ module Touringplans
                     else value
                     end
         result[new_key] = new_value
-        result
-      }
-    end  
+      end
+    end
 
     def self.load_routes_file(routes_relative_file_path: "/routes.yml")
-        tp_path = $LOAD_PATH.grep(/touringplans/).last
-        routes_file = "#{tp_path}#{routes_relative_file_path}"
-        YAML.load(File.read(routes_file))
+      tp_path = $LOAD_PATH.grep(/touringplans/).last
+      routes_file = "#{tp_path}#{routes_relative_file_path}"
+      YAML.safe_load(File.read(routes_file))
     end
-    
-    
+
     def self.update_file
       # gather info into hashes
       attractions_routes    = _generate_interest_routes_hash("attractions")
       dining_routes         = _generate_interest_routes_hash("dining")
-      hotels_routes         = {} #_generate_interest_routes_hash("hotels")
+      hotels_routes         = {} # _generate_interest_routes_hash("hotels")
       updated_routes        = original_routes.merge(attractions_routes, dining_routes, hotels_routes)
 
       updated_routes_yaml   = _convert_hash_to_yaml(updated_routes)
@@ -224,12 +222,13 @@ module Touringplans
 
     def self._initialize_file
       # delete old file if it exits
-      lib_dir     =  FileUtils.getwd() + "/lib"
+      lib_dir = FileUtils.getwd + "/lib"
       routes_file = "#{lib_dir}/routes.yml"
 
       # ensure the file exists
       touched_routes_file_array = FileUtils.touch(routes_file)
-      touched_routes_file = touched_routes_file_array.first
+      # we want the first string value
+      touched_routes_file_array.first
     end
 
     def self._generate_interest_routes_hash(interest)
@@ -237,7 +236,7 @@ module Touringplans
       interest_routes = {}
 
       interest_venues.each do |iv|
-        new_route = self._generate_interest_route(iv.venue_permalink, interest, iv.permalink)
+        new_route = _generate_interest_route(iv.venue_permalink, interest, iv.permalink)
         key = new_route.keys.first
         values = new_route[key]
         interest_routes[key] = values
@@ -245,7 +244,7 @@ module Touringplans
 
       interest_routes
     end
-    
+
     def self._generate_interest_route(venue_permalink, interest_permalink, place_permalink)
       # {magic_kingdom_attractions_haunted_mansion: {
       #   method: "get",
@@ -258,12 +257,8 @@ module Touringplans
       method  = "get"
       format  = "json"
 
-      hash = { key => { "method".to_s  => "get",
-                        "path".to_s    => "#{path}.#{format}"
-                      }
-      }
-
-      hash
+      { key => { "method".to_s => method,
+                 "path".to_s => "#{path}.#{format}" } }
     end
 
     def self._convert_hash_to_yaml(hash)
@@ -275,13 +270,13 @@ module Touringplans
       new_file.write(content)
       new_file.close
     end
-    
+
     def self._read_file_to_terminal(file)
       new_file = File.open(file, "r")
       new_file.close
     end
-    
   end
+
   # model with the attributes
   class CounterServiceLocation < Dry::Struct
     transform_keys(&:to_sym)
@@ -341,7 +336,7 @@ module Touringplans
     attribute :kosher_available, Types::Params::Bool
     attribute :dinable_id, Types::Params::Integer
     attribute :dinable_type, Types::String.optional
-    attribute :venue_permalink, Types::String.optional    
+    attribute :venue_permalink, Types::String.optional
   end
 
   # model with the attributes
@@ -414,7 +409,6 @@ module Touringplans
     attribute :short_name, Types::String
     attribute :permalink, Types::String
     attribute :venue_permalink, Types::String
-    
   end
 
   # model with the attributes
@@ -428,37 +422,35 @@ module Touringplans
     attribute :venue_permalink, Types::String.optional
   end
 
-  PLACE_KEYS          = %i[magic_kingdom 
-                          animal_kingdom 
-                          epcot 
-                          hollywood_studios 
-                          walt_disney_world
-                      ].freeze
-                      # {interest:"interest_type"}
-  INTERESTS           = %i[counter_services 
-                          table_services 
-                          attractions 
-                          hotels 
-                          campground
-                          deluxe_hotels
-                          deluxe_villas
-                          moderate_hotels
-                          value_hotels
-                          disney_springs_resorts
-                        ].freeze
-    HOTEL_CATEGORIES  = %i[campground 
-                          deluxe_hotels 
-                          deluxe_villas 
-                          moderate_hotels 
-                          value_hotels 
-                          disney_springs_resorts]
+  PLACE_KEYS          = %i[magic_kingdom
+                           animal_kingdom
+                           epcot
+                           hollywood_studios
+                           walt_disney_world].freeze
+  # {interest:"interest_type"}
+  INTERESTS           = %i[counter_services
+                           table_services
+                           attractions
+                           hotels
+                           campground
+                           deluxe_hotels
+                           deluxe_villas
+                           moderate_hotels
+                           value_hotels
+                           disney_springs_resorts].freeze
+  HOTEL_CATEGORIES = %i[campground
+                        deluxe_hotels
+                        deluxe_villas
+                        moderate_hotels
+                        value_hotels
+                        disney_springs_resorts].freeze
 
   # list interest at location
   # current interest are "counter service" "table service", and  "attractions"
   # current locations are the four parks
   def self.list(interest, location)
     return "The location is not on Disney property" unless PLACE_KEYS.include? _symbolize(location)
-    return "The interest is not valid"         unless INTERESTS.include? _symbolize(interest)
+    return "The interest is not valid" unless INTERESTS.include? _symbolize(interest)
 
     client = _setup_client
     listings            = []
@@ -467,10 +459,9 @@ module Touringplans
     response            = client.send(route).parsed_response
     listing_hashes      = _collect_listing_hashes_from_response(interest, response)
     listing_hashes.each do |item|
-      item["venue_permalink"] =  location.to_s.downcase.gsub(" ", "-")
+      item["venue_permalink"] = location.to_s.downcase.gsub(" ", "-")
     end
 
-    listing_hashes
     listing_hashes.each do |hash|
       listing = _set_model_from_hash(interest, hash)
       listings << listing
@@ -526,9 +517,8 @@ module Touringplans
   def self._setup_client
     connection = Connection.new
     connection.query(key: "HowdyLen")
-    routes = Touringplans::RoutesTable.symbolize_keys(Touringplans::RoutesTable.load_routes_file)   
+    routes = Touringplans::RoutesTable.symbolize_keys(Touringplans::RoutesTable.load_routes_file)
     Client.new(connection: connection, routes: routes)
-
   end
 
   def self._format_location_name(location_name)
@@ -540,8 +530,7 @@ module Touringplans
 
     interest_type = "dining" if interest == "counter services"
     interest_type = "dining" if interest == "table services"
-    interest_type = "hotels" if %i[campground deluxe_hotels deluxe_villas moderate_hotels value_hotels disney_springs_resorts
-                                  ].include? _symbolize(interest)
+    interest_type = "hotels" if %i[campground deluxe_hotels deluxe_villas moderate_hotels value_hotels disney_springs_resorts].include? _symbolize(interest)
 
     interest_type
   end
@@ -555,7 +544,6 @@ module Touringplans
     str.to_sym
   end
 
-  
   def self._assemble_route(location, interest_type)
     formatted_location      = location.to_s.downcase.gsub(" ", "_")
     formatted_interest_type = interest_type.to_s.downcase.gsub(" ", "_")
@@ -575,15 +563,13 @@ module Touringplans
 
     listing_hashes
   end
-  
+
   def self.list_all_hotels(response_from_touringplans_hotels_url)
     listing_hashes = []
 
     response_from_touringplans_hotels_url.each do |child|
       child.each do |grandchild|
-        if "#{grandchild.class}" == "Array"
-          listing_hashes << grandchild
-        end          
+        listing_hashes << grandchild if grandchild.class.to_s == "Array"
       end
     end
 
@@ -591,32 +577,28 @@ module Touringplans
   end
 
   # search for hotels of a category_code
-  def self.list_hotels_of_a_category(hotels, interest) 
-    hotel_categories = {campground:"campground", deluxe_hotels:"deluxe", 
-                    deluxe_villas:"deluxe_villa", moderate_hotels:"moderate", 
-                    value_hotels:"value", disney_springs_resorts: NilClass}
+  def self.list_hotels_of_a_category(hotels, interest)
+    hotel_categories = { campground: "campground", deluxe_hotels: "deluxe",
+                         deluxe_villas: "deluxe_villa", moderate_hotels: "moderate",
+                         value_hotels: "value", disney_springs_resorts: NilClass }
     # get a list of every hotel model
 
     # filter by category_code
-    # disney springs category code is null.  We need to find a rule for finding those that don't have any of the values of 
+    # disney springs category code is null.  We need to find a rule for finding those that don't have any of the values of
     # hotel categories
     if interest == "disney springs resorts"
-    target_hotels = hotels.find_all  { |hotel| hotel.category_code.class == NilClass }       
-      
-    else
-    target_hotels = hotels.find_all  { |hotel| hotel.category_code == hotel_categories[_symbolize(interest)] }       
-      
-    end
+      hotels.find_all { |hotel| hotel.category_code.instance_of?(NilClass) }
 
-    target_hotels
+    else
+      hotels.find_all { |hotel| hotel.category_code == hotel_categories[_symbolize(interest)] }
+
+    end
   end
-  
+
   def generate_route_table
     # initial_routes = ROUTES
-
   end
-  
-  
+
   def self._set_model_from_hash(interest, hash)
     hotel_categories = %i[campground deluxe_hotels deluxe_villas moderate_hotels value_hotels disney_springs_resorts hotels]
 
