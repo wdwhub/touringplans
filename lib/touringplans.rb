@@ -211,11 +211,8 @@ module Touringplans
       }
     end  
 
-    def self.load_routes_file(routes_relative_file_path: "/lib/routes.yml")
-        tp_path = $LOAD_PATH.grep(/touringplans/).first.split("/")
-        tp_path.reject! {|k| k=="spec"}
-        tp_path.pop
-        tp_path = tp_path.join("/")
+    def self.load_routes_file(routes_relative_file_path: "/routes.yml")
+        tp_path = $LOAD_PATH.grep(/touringplans/).last
         routes_file = "#{tp_path}#{routes_relative_file_path}"
         YAML.load(File.read(routes_file))
     end
