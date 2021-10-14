@@ -73,7 +73,7 @@ module Touringplans
       method: "get",
       path: "/walt-disney-world/hotels.json"
     }
-  }
+  }.freeze
 
   def self.routes
     ROUTES
@@ -88,6 +88,7 @@ module Touringplans
     # currently Touring Plans has no verision in its API
     DEFAULT_API_VERSION = "1"
     DEFAULT_BASE_URI  = "https://touringplans.com/"
+    # do not freeze DEFAULT_QUERY
     DEFAULT_QUERY     = {}
 
     base_uri DEFAULT_BASE_URI
@@ -150,6 +151,7 @@ module Touringplans
     end
   end
 
+  # Generates and updates routes for all types of venues in a YAML document.
   class RoutesTable
     require "fileutils"
     def initialize(filename: "routes_table.yml")
@@ -202,7 +204,7 @@ module Touringplans
     def self.load_routes_file(routes_relative_file_path: "/routes.yml")
       tp_path = $LOAD_PATH.grep(/touringplans/).last
       routes_file = "#{tp_path}#{routes_relative_file_path}"
-      YAML.load(File.read(routes_file))
+      YAML.safe_load(File.read(routes_file))
     end
 
     def self.update_file
@@ -225,7 +227,8 @@ module Touringplans
 
       # ensure the file exists
       touched_routes_file_array = FileUtils.touch(routes_file)
-      touched_routes_file = touched_routes_file_array.first
+      # we want the first string value
+      touched_routes_file_array.first
     end
 
     def self._generate_interest_routes_hash(interest)
@@ -254,7 +257,7 @@ module Touringplans
       method  = "get"
       format  = "json"
 
-      { key => { "method".to_s => "get",
+      { key => { "method".to_s => method,
                  "path".to_s => "#{path}.#{format}" } }
     end
 
@@ -440,7 +443,7 @@ module Touringplans
                         deluxe_villas
                         moderate_hotels
                         value_hotels
-                        disney_springs_resorts]
+                        disney_springs_resorts].freeze
 
   # list interest at location
   # current interest are "counter service" "table service", and  "attractions"
@@ -459,7 +462,6 @@ module Touringplans
       item["venue_permalink"] = location.to_s.downcase.gsub(" ", "-")
     end
 
-    listing_hashes
     listing_hashes.each do |hash|
       listing = _set_model_from_hash(interest, hash)
       listings << listing
