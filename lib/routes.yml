@@ -419,6 +419,9 @@ epcot_attractions_mission_space_orange:
 epcot_attractions_reflections_of_china:
   method: get
   path: "/epcot/attractions/reflections-of-china.json"
+epcot_attractions_remys_ratatouille_adventure:
+  method: get
+  path: "/epcot/attractions/remys-ratatouille-adventure.json"
 epcot_attractions_the_seas_main_tank_and_exhibits:
   method: get
   path: "/epcot/attractions/the-seas-main-tank-and-exhibits.json"
