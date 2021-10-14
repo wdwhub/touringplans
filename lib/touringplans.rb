@@ -12,16 +12,7 @@ module Touringplans
     include Dry.Types()
   end
 
-  GEM_ROOT = File.expand_path("../", __FILE__)
   
-  include HTTParty
-  # currently Touring Plans has no verision in its API
-  DEFAULT_API_VERSION = "1"
-  DEFAULT_BASE_URI  = "https://touringplans.com/"
-  DEFAULT_QUERY     = {}
-
-  base_uri DEFAULT_BASE_URI
-
   ROUTES = {
     magic_kingdom_dining: {
       method: "get",
