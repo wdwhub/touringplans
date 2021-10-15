@@ -211,7 +211,7 @@ module Touringplans
       # gather info into hashes
       attractions_routes    = _generate_interest_routes_hash("attractions")
       dining_routes         = _generate_interest_routes_hash("dining")
-      hotels_routes         = {} # _generate_interest_routes_hash("hotels")
+      hotels_routes         = _generate_interest_routes_hash("hotels")
       updated_routes        = original_routes.merge(attractions_routes, dining_routes, hotels_routes)
 
       updated_routes_yaml   = _convert_hash_to_yaml(updated_routes)
@@ -459,7 +459,7 @@ module Touringplans
     response            = client.send(route).parsed_response
     listing_hashes      = _collect_listing_hashes_from_response(interest, response)
     listing_hashes.each do |item|
-      item["venue_permalink"] = location.to_s.downcase.gsub(" ", "-")
+      item["venue_permalink"] = location.to_s.downcase.gsub(" ", "-").gsub("_", "-")
     end
 
     listing_hashes.each do |hash|

@@ -114,7 +114,7 @@ RSpec.describe Touringplans do
   end
 
   describe "#show" do
-    context "when searching for a dining location" do
+    context "when showing the details for a dining location" do
       context "counter service with a short_name" do
           venue = Touringplans.show("dining", "Cosmic Ray's")
         it "supports name" do
@@ -563,11 +563,19 @@ RSpec.describe Touringplans do
       end
     end
 
-    context "when looking for an attraction" do
-      it "supports showing a counter service dining location" do
+    context "when showing the details for an attraction" do
+      it "supports showing an attraction's details" do
         expect(Touringplans.show("attractions", "Astro Orbiter").permalink).to eq("astro-orbiter")
       end
     end
+
+    context "when showing the details for a hotel" do
+      it "supports showing a hotels details" do
+        # https://touringplans.com/walt-disney-world/hotels/disneys-grand-floridian-resort.json
+        expect(Touringplans.show("hotels", "Disney's Polynesian Village Resort").permalink).to eq("astro-orbiter")
+      end      
+    end
+    
   end
 
   describe "#update_route_table" do
@@ -576,8 +584,6 @@ RSpec.describe Touringplans do
     end
     
   end
-
-
 
   describe "._determine_interest_type" do
     it "sets interest_type to 'dining' when the interest is 'counter service'" do

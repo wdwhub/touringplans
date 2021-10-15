@@ -71,7 +71,7 @@ RSpec.describe Touringplans do
       # gather info into hashes
       attractions_routes    = tpr._generate_interest_routes_hash("attractions")
       dining_routes         = tpr._generate_interest_routes_hash("dining")
-      hotels_routes         = {} #tpr._generate_interest_routes_hash("hotels")
+      hotels_routes         = tpr._generate_interest_routes_hash("hotels")
       updated_routes        = tpr.original_routes.merge(attractions_routes, dining_routes, hotels_routes)
 
       updated_routes_yaml   = tpr._convert_hash_to_yaml(updated_routes)

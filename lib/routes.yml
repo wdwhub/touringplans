@@ -803,3 +803,117 @@ hollywood_studios_dining_roundup_rodeo_bbq:
 hollywood_studios_dining_scifi_dine_in_theater_restaurant:
   method: get
   path: "/hollywood-studios/dining/scifi-dine-in-theater-restaurant.json"
+walt_disney_world_hotels_fort_wilderness_campsites:
+  method: get
+  path: "/walt-disney-world/hotels/fort-wilderness-campsites.json"
+walt_disney_world_hotels_disneys_animal_kingdom_lodge:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-animal-kingdom-lodge.json"
+walt_disney_world_hotels_disneys_beach_club_resort:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-beach-club-resort.json"
+walt_disney_world_hotels_disneys_boardwalk_inn:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-boardwalk-inn.json"
+walt_disney_world_hotels_disneys_contemporary_resort:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-contemporary-resort.json"
+walt_disney_world_hotels_disneys_grand_floridian_resort:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-grand-floridian-resort.json"
+walt_disney_world_hotels_disneys_polynesian_resort:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-polynesian-resort.json"
+walt_disney_world_hotels_disneys_wilderness_lodge:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-wilderness-lodge.json"
+walt_disney_world_hotels_disneys_yacht_club_resort:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-yacht-club-resort.json"
+walt_disney_world_hotels_shades_of_green_at_walt_disney_world:
+  method: get
+  path: "/walt-disney-world/hotels/shades-of-green-at-walt-disney-world.json"
+walt_disney_world_hotels_star_wars_galactic_starcruiser:
+  method: get
+  path: "/walt-disney-world/hotels/star-wars-galactic-starcruiser.json"
+walt_disney_world_hotels_dolphin_at_walt_disney_world:
+  method: get
+  path: "/walt-disney-world/hotels/dolphin-at-walt-disney-world.json"
+walt_disney_world_hotels_swan_at_walt_disney_world:
+  method: get
+  path: "/walt-disney-world/hotels/swan-at-walt-disney-world.json"
+walt_disney_world_hotels_disney_world_swan_reserve:
+  method: get
+  path: "/walt-disney-world/hotels/disney-world-swan-reserve.json"
+walt_disney_world_hotels_bay_lake_tower_at_disneys_contemporary_resort:
+  method: get
+  path: "/walt-disney-world/hotels/bay-lake-tower-at-disneys-contemporary-resort.json"
+walt_disney_world_hotels_disneys_wilderness_lodge_villas:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-wilderness-lodge-villas.json"
+walt_disney_world_hotels_copper_creek_villas:
+  method: get
+  path: "/walt-disney-world/hotels/copper-creek-villas.json"
+walt_disney_world_hotels_animal_kingdom_villas_jambo:
+  method: get
+  path: "/walt-disney-world/hotels/animal-kingdom-villas-jambo.json"
+walt_disney_world_hotels_disneys_animal_kingdom_villas:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-animal-kingdom-villas.json"
+walt_disney_world_hotels_disneys_beach_club_villas:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-beach-club-villas.json"
+walt_disney_world_hotels_disneys_boardwalk_villas:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-boardwalk-villas.json"
+walt_disney_world_hotels_disneys_old_key_west_resort:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-old-key-west-resort.json"
+walt_disney_world_hotels_disneys_polynesian_villas_bungalows:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-polynesian-villas-bungalows.json"
+walt_disney_world_hotels_disneys_riviera_resort:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-riviera-resort.json"
+walt_disney_world_hotels_disneys_saratoga_springs_resort_spa:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-saratoga-springs-resort-spa.json"
+walt_disney_world_hotels_disney_reflections:
+  method: get
+  path: "/walt-disney-world/hotels/disney-reflections.json"
+walt_disney_world_hotels_the_villas_at_disneys_grand_floridian_resort_and_spa:
+  method: get
+  path: "/walt-disney-world/hotels/the-villas-at-disneys-grand-floridian-resort-and-spa.json"
+walt_disney_world_hotels_treehouse_villas_at_disneys_saratoga_springs_resort:
+  method: get
+  path: "/walt-disney-world/hotels/treehouse-villas-at-disneys-saratoga-springs-resort.json"
+walt_disney_world_hotels_disneys_caribbean_beach_resort:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-caribbean-beach-resort.json"
+walt_disney_world_hotels_disneys_coronado_springs_resort:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-coronado-springs-resort.json"
+walt_disney_world_hotels_disneys_port_orleans_resort_french_quarter:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-port-orleans-resort-french-quarter.json"
+walt_disney_world_hotels_disneys_port_orleans_resort_riverside:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-port-orleans-resort-riverside.json"
+walt_disney_world_hotels_fort_wilderness_resort_cabins:
+  method: get
+  path: "/walt-disney-world/hotels/fort-wilderness-resort-cabins.json"
+walt_disney_world_hotels_disneys_all_star_movies_resort:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-all-star-movies-resort.json"
+walt_disney_world_hotels_disneys_all_star_music_resort:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-all-star-music-resort.json"
+walt_disney_world_hotels_disneys_all_star_sports_resort:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-all-star-sports-resort.json"
+walt_disney_world_hotels_disneys_art_of_animation_resort:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-art-of-animation-resort.json"
+walt_disney_world_hotels_disneys_pop_century_resort:
+  method: get
+  path: "/walt-disney-world/hotels/disneys-pop-century-resort.json"
