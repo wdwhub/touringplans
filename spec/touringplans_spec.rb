@@ -114,16 +114,34 @@ RSpec.describe Touringplans do
   end
 
   describe "#show" do
-    context "when searching for a dining location" do
+    # context "when we want to just show something" do
+    #   it "supports showing an attraction's details" do
+    #     # magic_kingdom_attractions_casey_jr_splash_n_soak_station
+    #     # https://touringplans.com/magic-kingdom/attractions/casey-jr-splash-n-soak-station.json
+    #     # show(collection, interest_type, short_name) 
+    #     expect(Touringplans.show("magic kingdom","attractions", "Astro Orbiter")).to eq("something")
+    #   end      
+
+    #   it "supports showing an dining venue's details" do
+    #     # magic_kingdom_dining_cosmic_rays_starlight_cafe
+    #     # https://touringplans.com/magic-kingdom/dining/cosmic-rays-starlight-cafe.json
+    #     # show(collection, interest_type, short_name) 
+    #     expect(Touringplans.show("magic kingdom", "dining", "columbia harbour house")).to eq("something")
+    #   end      
+
+    #   it "supports showing a hotel's details" do
+    #     # walt_disney_world_hotels_disneys_grand_floridian_resort
+    #     # https://touringplans.com/walt-disney-world/hotels/disneys-grand-floridian-resort.json
+    #     expect(Touringplans.show("walt disney world", "hotels", "disneys polynesian resort")).to eq("something")
+    #   end      
+    # end
+    
+    context "when showing the details for a dining location" do
       context "counter service with a short_name" do
-          venue = Touringplans.show("dining", "Cosmic Ray's")
+          venue = Touringplans.show("magic kingdom", "dining", "cosmic rays starlight cafe")
         it "supports name" do
           expect(venue.name).to eq("Cosmic Ray's Starlight Café")
         end        
-
-        it "supports land_id" do
-          expect(venue.land_id).to eq(7)
-        end   
 
         it "supports showing  the venue permalink" do
           expect(venue.permalink).to eq("cosmic-rays-starlight-cafe")
@@ -189,22 +207,6 @@ RSpec.describe Touringplans do
           expect(venue.dinner_hours).to eq(nil)
         end        
 
-        it "supports selection" do
-          expect(venue.selection).to eq("Rotisserie chicken and ribs, burgers, hot dogs, Greek salad, chicken, turkey sandwiches, chocolate or carrot cake")
-        end        
-
-        it "supports setting_atmosphere" do
-          expect(venue.setting_atmosphere).to eq("Busy fast food eatery in Tomorrowland which features the audio animatronic \"Sonny Eclipse\" entertaining diners in a side room. If it's busy seating can be tough to find, but there are a lot of tables so keep checking different rooms.")
-        end        
-
-        it "supports other_recommendations" do
-          expect(venue.other_recommendations).to eq(nil)
-        end        
-
-        it "supports summary" do
-          expect(venue.summary).to eq("<p>Each of the three “bays” has different offerings, so make sure you look at each menu before deciding—and note that some items show up on more than one menu. Generous toppings bar.</p>\r\n" )
-        end        
-
         it "supports house_specialties" do
           expect(venue.house_specialties).to eq("Rotisserie chicken and ribs; burgers (and vegetarian burgers); hot\r\ndogs; Greek salad; chicken, turkey, and vegetable sandwiches; chicken\r\nnuggets; chili-cheese dog; barbecue-pork sandwich; chicken-noodle\r\nsoup; chili-cheese fries; gelato and cake for dessert. Kosher choices available\r\nby request.")
         end        
@@ -227,10 +229,6 @@ RSpec.describe Touringplans do
 
         it "supports overall_rating" do
           expect(venue.overall_rating).to eq(nil)
-        end        
-
-        it "supports service_rating" do
-          expect(venue.service_rating).to eq(nil)
         end        
 
         it "supports friendliness_rating" do
@@ -277,26 +275,6 @@ RSpec.describe Touringplans do
           expect(venue.updated_at.class.to_s).to eq("DateTime")
         end        
 
-        it "supports plan_x_coord" do
-          expect(venue.plan_x_coord).to eq(395)
-        end        
-
-        it "supports plan_y_coord" do
-          expect(venue.plan_y_coord).to eq(220)
-        end        
-
-        it "supports old_park_id" do
-          expect(venue.old_park_id).to eq(1)
-        end        
-
-        it "supports old_attraction_id" do
-          expect(venue.old_attraction_id).to eq(57)
-        end        
-
-        it "supports plan_name" do
-          expect(venue.plan_name).to eq("Dine at Cosmic Ray's Starlight Cafe")
-        end        
-
         it "supports extinct_on" do
           expect(venue.extinct_on).to eq(nil)
         end        
@@ -324,32 +302,16 @@ RSpec.describe Touringplans do
         it "supports kosher_available" do
           expect(venue.kosher_available).to eq(true)
         end
-
-        it "supports dinable_id" do
-          expect(venue.dinable_id).to eq(1)
-        end
-
-        it "supports dinable_type" do
-          expect(venue.dinable_type).to eq("Park")
-        end
-
-        it "supports venue_permalink" do
-          expect(venue.venue_permalink).to eq("magic-kingdom")
-        end
       end
 
       context "table service with a short_name" do
-        venue = Touringplans.show("dining", "Cinderella's Table")
+        venue = Touringplans.show("magic kingdom","dining", "cinderellas_royal_table")
 
         it "supports  name" do
           expect(venue.name).to eq("Cinderella's Royal Table")
         end        
 
-        it "supports  land_id" do
-          expect(venue.land_id).to eq(5)
-        end   
-
-        it "supports showing  the venue permalink" do
+        it "supports showing the venue permalink" do
           expect(venue.permalink).to eq("cinderellas-royal-table")
         end        
 
@@ -413,22 +375,6 @@ RSpec.describe Touringplans do
           expect(venue.dinner_hours).to eq("4:00 PM to 10:20 PM")
         end        
 
-        it "supports selection" do
-          expect(venue.selection).to eq("French toast, quiche, poached lobster, beef tenderloin, fish of the day, braised short ribs, and chocolate cake")
-        end        
-
-        it "supports setting_atmosphere" do
-          expect(venue.setting_atmosphere).to eq("A recent spiffing-up of the medieval banquet hall\r\nincluded new carpet and new costumes for the servers, but most guests won’t recognize the difference. It’s still the top spot for dining in the\r\ntheme parks. While the food is better than average, it’s more about\r\nexperiencing a character meal on the second floor of Cinderella Castle.\r\n<h3>Walk Through</h3>\r\n<iframe width=\"520\" height=\"275\" src=\"https://www.youtube.com/embed/Y96Yos1O2Mg\" frameborder=\"0\" allowfullscreen></iframe>\r\n</p>" )
-        end        
-
-        it "supports other_recommendations" do
-          expect(venue.other_recommendations).to eq("<p>\r\n<b>Related articles:</b><br>\r\n\r\n<a href=\"https://touringplans.com/blog/review-what-is-it-like-to-dine-at-cinderellas-royal-table-without-the-characters/\">REVIEW: What Is It Like to Dine At Cinderella’s Royal Table Without the Characters?\r\n</a><br>\r\n\r\n\r\n\r\n<a href=\"http://blog.touringplans.com/2014/09/13/ss_cinderellas_royal_table/\">Six Reasons Breakfast at Cinderella's Royal Table is Worth your Time and Effort</a>\r\n</p>" )
-        end        
-
-        it "supports summary" do
-          expect(venue.summary).to eq("It isn’t cheap to eat here, but no matter—families\r\ncan’t seem to get enough of this “Disney magic.”\r\n"  )
-        end        
-
         it "supports house_specialties" do
           expect(venue.house_specialties).to eq("<p>\r\nAll meals are fixed-price character affairs, and the\r\nkitchen is upping its game - at breakfast there's caramel apple-stuffed\r\nFrench toast; goat cheese quiche; poached lobster and shrimp topped\r\nwith a poached egg and hollandaise; beef tenderloin and cheese frittata;\r\nor a healthy plate with scrambled egg whites, hot 10-grain cereal, Greek\r\nyogurt, house-made granola, walnut-sunflower bread, and fresh fruit. At\r\nlunch you'll find fish of the day, braised short ribs with parsnip mashed\r\npotatoes, gnocchi or rice with seasonal vegetables, and pan-seared\r\nchicken with goat cheese polenta. Dinner fare may include slow-roasted\r\npork loin and flourless chocolate cake.\r\n</p>\r\n\r\n<p>Guest order from a limited menu. Seconds or additional items are usually allowed, but are left to the discretion of the server.</p>" )
         end        
@@ -442,23 +388,23 @@ RSpec.describe Touringplans do
         end        
 
         it "supports table_quality_rating" do
-          expect(venue.table_quality_rating.class.to_s).to eq("BigDecimal")
+          expect(venue.table_quality_rating.class.to_s).to eq("Float")
         end        
 
         it "supports table_value_rating" do
-          expect(venue.table_value_rating.class.to_s).to eq("BigDecimal")
+          expect(venue.table_value_rating.class.to_s).to eq("Float")
         end        
 
         it "supports overall_rating" do
-          expect(venue.overall_rating.class.to_s).to eq("BigDecimal")
+          expect(venue.overall_rating.class.to_s).to eq("Float")
         end        
 
         it "supports service_rating" do
-          expect(venue.service_rating.class.to_s).to eq("BigDecimal")
+          expect(venue.service_rating.class.to_s).to eq("Float")
         end        
 
         it "supports friendliness_rating" do
-          expect(venue.friendliness_rating.class.to_s).to eq("BigDecimal")
+          expect(venue.friendliness_rating.class.to_s).to eq("Float")
         end        
 
         it "supports adult_breakfast_menu_url" do
@@ -501,26 +447,6 @@ RSpec.describe Touringplans do
           expect(venue.updated_at.class.to_s).to eq("DateTime")
         end        
 
-        it "supports plan_x_coord" do
-          expect(venue.plan_x_coord).to eq(324)
-        end        
-
-        it "supports plan_y_coord" do
-          expect(venue.plan_y_coord).to eq(212)
-        end        
-
-        it "supports old_park_id" do
-          expect(venue.old_park_id).to eq(1)
-        end        
-
-        it "supports old_attraction_id" do
-          expect(venue.old_attraction_id).to eq(76)
-        end        
-
-        it "supports plan_name" do
-          expect(venue.plan_name).to eq("Dine at Cinderella's Royal Table")
-        end        
-
         it "supports extinct_on" do
           expect(venue.extinct_on).to eq(nil)
         end        
@@ -549,25 +475,22 @@ RSpec.describe Touringplans do
           expect(venue.kosher_available).to eq(false)
         end
 
-        it "supports dinable_id" do
-          expect(venue.dinable_id).to eq(1)
-        end
-
-        it "supports dinable_type" do
-          expect(venue.dinable_type).to eq("Park")
-        end
-
-        it "supports venue_permalink" do
-          expect(venue.venue_permalink).to eq("magic-kingdom")
-        end
       end
     end
 
-    context "when looking for an attraction" do
-      it "supports showing a counter service dining location" do
-        expect(Touringplans.show("attractions", "Astro Orbiter").permalink).to eq("astro-orbiter")
-      end
+    # context "when showing the details for an attraction" do
+    #   it "supports showing an attraction's details" do
+    #     expect(Touringplans.show("magic kingdom","attractions", "Astro Orbiter").permalink).to eq("astro-orbiter")
+    #   end
+    # end
+
+    context "when showing the details for a hotel" do
+      it "supports showing a hotels details" do
+        # https://touringplans.com/walt-disney-world/hotels/disneys-grand-floridian-resort.json
+        expect(Touringplans.show("walt disney world","hotels", "disneys-polynesian-resort").name).to eq("Disney's Polynesian Village Resort")
+      end      
     end
+    
   end
 
   describe "#update_route_table" do
@@ -576,8 +499,6 @@ RSpec.describe Touringplans do
     end
     
   end
-
-
 
   describe "._determine_interest_type" do
     it "sets interest_type to 'dining' when the interest is 'counter service'" do
@@ -617,5 +538,35 @@ RSpec.describe Touringplans do
     end
   end
 
-  
+  describe "#_assemble_route" do
+    it "supports creating a route name for an attraction" do
+      collection      = "magic kingdom" 
+      interest_type   = "attractions"
+      venue           = "casey jr splash n soak station"
+      expect(Touringplans._assemble_route(collection, interest_type, venue)).to eq("magic_kingdom_attractions_casey_jr_splash_n_soak_station")
+    end
+
+    it "supports creating a route name for a hotel" do
+      collection      = "walt disney world" 
+      interest_type   = "hotels"
+      venue           = "disneys polynesian village resort"
+      expect(Touringplans._assemble_route(collection, interest_type, venue)).to eq("walt_disney_world_hotels_disneys_polynesian_village_resort")# "magic_kingdom_dining_caseys_corner")
+    end
+
+    it "supports creating a route name for a dining venue" do
+      collection      = "magic kingdom" 
+      interest_type   = "dining"
+      venue           = "caseys corner"
+      expect(Touringplans._assemble_route(collection, interest_type, venue)).to eq("magic_kingdom_dining_caseys_corner")
+    end
+
+    it "supports creating a route name for a list of attractions" do
+      collection      = "magic kingdom" 
+      interest_type   = "attractions"
+      venue           = "list"
+      expect(Touringplans._assemble_route(collection, interest_type, venue)).to eq("magic_kingdom_attractions")
+    end
+
+  end
+    
 end

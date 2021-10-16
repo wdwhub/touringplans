@@ -211,7 +211,7 @@ module Touringplans
       # gather info into hashes
       attractions_routes    = _generate_interest_routes_hash("attractions")
       dining_routes         = _generate_interest_routes_hash("dining")
-      hotels_routes         = {} # _generate_interest_routes_hash("hotels")
+      hotels_routes         = _generate_interest_routes_hash("hotels")
       updated_routes        = original_routes.merge(attractions_routes, dining_routes, hotels_routes)
 
       updated_routes_yaml   = _convert_hash_to_yaml(updated_routes)
@@ -369,11 +369,11 @@ module Touringplans
     attribute :house_specialties, Types::String.optional
     attribute :counter_quality_rating, Types::String.optional
     attribute :counter_value_rating, Types::String.optional
-    attribute :table_quality_rating, Types::Params::Decimal.optional
-    attribute :table_value_rating, Types::Params::Decimal.optional
-    attribute :overall_rating, Types::Params::Decimal.optional
-    attribute :service_rating, Types::Params::Decimal.optional
-    attribute :friendliness_rating, Types::Params::Decimal.optional
+    attribute :table_quality_rating, Types::Params::Float.optional
+    attribute :table_value_rating, Types::Params::Float.optional
+    attribute :overall_rating, Types::Params::Float.optional
+    attribute :service_rating, Types::Params::Float.optional
+    attribute :friendliness_rating, Types::Params::Float.optional
     attribute :adult_breakfast_menu_url, Types::String.optional
     attribute :adult_lunch_menu_url, Types::String.optional
     attribute :adult_dinner_menu_url, Types::String.optional
@@ -402,6 +402,70 @@ module Touringplans
   end
 
   # model with the attributes
+  class DiningVenueFull < Dry::Struct
+    transform_keys(&:to_sym)
+
+    attribute :name, Types::String
+    attribute :permalink, Types::String
+    attribute :category_code, Types::String
+    attribute :portion_size, Types::String.optional
+    attribute :cost_code, Types::String.optional
+    attribute :cuisine, Types::String
+    attribute :phone_number, Types::String.optional
+    attribute :entree_range, Types::String.optional
+    attribute :when_to_go, Types::String.optional
+    attribute :parking, Types::String.optional
+    attribute :bar, Types::String.optional
+    attribute :wine_list, Types::String.optional
+    attribute :dress, Types::String.optional
+    attribute :awards, Types::String.optional
+    attribute :breakfast_hours, Types::String.optional
+    attribute :lunch_hours, Types::String.optional
+    attribute :dinner_hours, Types::String.optional
+    attribute :house_specialties, Types::String.optional
+    attribute :counter_quality_rating, Types::String.optional
+    attribute :counter_value_rating, Types::String.optional
+    attribute :table_quality_rating, Types::Float.optional
+    attribute :table_value_rating, Types::Float.optional
+    attribute :overall_rating, Types::Float.optional
+    attribute :service_rating, Types::Float.optional
+    attribute :friendliness_rating, Types::Float.optional
+    attribute :adult_breakfast_menu_url, Types::String.optional
+    attribute :adult_lunch_menu_url, Types::String.optional
+    attribute :adult_dinner_menu_url, Types::String.optional
+    attribute :child_breakfast_menu_url, Types::String.optional
+    attribute :child_lunch_menu_url, Types::String.optional
+    attribute :child_dinner_menu_url, Types::String.optional
+    attribute :requires_credit_card, Types::Params::Bool
+    attribute :requires_pre_payment, Types::Params::Bool
+    attribute :created_at, Types::Params::DateTime
+    attribute :updated_at, Types::Params::DateTime
+    attribute :extinct_on, Types::Params::DateTime.optional
+    attribute :opened_on, Types::Params::DateTime.optional
+    attribute :disney_permalink, Types::String.optional
+    attribute :code, Types::String.optional
+    attribute :short_name, Types::String.optional
+    attribute :accepts_reservations, Types::Params::Bool
+    attribute :kosher_available, Types::Params::Bool
+
+    attribute :operator_id, Types::Integer
+    attribute :operator_url, Types::String.optional
+    attribute :operator_type, Types::String.optional
+    attribute :walking_time_proxy_id, Types::String.optional
+    attribute :sort_name, Types::String.optional
+    attribute :mobile_ordering, Types::Bool.optional
+    attribute :extinct_on_uncertain, Types::String.optional
+    attribute :opened_on_uncertain, Types::String.optional
+    attribute :opened_on_known, Types::String.optional
+    attribute :operational_notes, Types::String.optional
+    attribute :latitude, Types::String.optional
+    attribute :longitude, Types::String.optional
+    attribute :summary_at_top, Types::Bool.optional
+
+  end
+
+
+  # model with the attributes
   class ParkAttraction < Dry::Struct
     transform_keys(&:to_sym)
 
@@ -409,6 +473,91 @@ module Touringplans
     attribute :short_name, Types::String
     attribute :permalink, Types::String
     attribute :venue_permalink, Types::String
+  end
+
+    # model with the attributes
+  class ParkAttractionFull < Dry::Struct
+    transform_keys(&:to_sym)
+
+    attribute :name, Types::String
+    attribute :fastpass_booth, Types::Bool
+    attribute :short_name, Types::String
+    attribute :created_at, Types::Params::DateTime
+    attribute :updated_at, Types::Params::DateTime
+    attribute :open_emh_morning, Types::Bool
+    attribute :open_emh_evening, Types::Bool
+    attribute :single_rider, Types::Bool
+    attribute :time_zone, Types::String
+    attribute :seasonal, Types::Bool
+    attribute :open_very_merry, Types::Bool
+    attribute :open_not_so_scary, Types::Bool
+    attribute :category_code, Types::String
+    attribute :duration, Types::Float
+    attribute :scheduled_code, Types::String.optional
+    attribute :what_it_is, Types::String
+    attribute :scope_and_scale_code, Types::String
+    attribute :when_to_go, Types::String
+    attribute :average_wait_per_hundred, Types::Float
+    attribute :average_wait_assumes, Types::String.optional
+    attribute :loading_speed, Types::String
+    attribute :probable_wait_time, Types::Float.optional
+    attribute :special_needs, Types::String.optional
+    attribute :height_restriction, Types::Float.optional
+    attribute :intense, Types::Bool
+    attribute :extinct_on, Types::Params::DateTime.optional
+    attribute :opened_on, Types::Params::DateTime.optional
+    attribute :frightening, Types::Bool
+    attribute :physical_considerations, Types::Bool
+    attribute :handheld_captioning, Types::Bool
+    attribute :video_captioning, Types::Bool
+    attribute :reflective_captioning, Types::Bool
+    attribute :assistive_listening, Types::Bool
+    attribute :audio_description, Types::Bool
+    attribute :wheelchair_transfer_code, Types::String
+    attribute :no_service_animals, Types::Bool
+    attribute :sign_language, Types::Bool
+    attribute :service_animal_check, Types::Bool
+    attribute :not_to_be_missed, Types::Bool
+    attribute :rider_swap, Types::Bool
+    attribute :ultimate_code, Types::String
+    attribute :ultimate_task, Types::String
+    attribute :park_entrance, Types::Bool
+    attribute :relative_open, Types::Bool.optional
+    attribute :relative_close, Types::Bool.optional
+    attribute :close_at_dusk, Types::Bool.optional
+    attribute :crowd_calendar_version, Types::Integer
+    attribute :match_name, Types::String
+    attribute :crazy_threshold, Types::Integer.optional
+    attribute :fastpass_only, Types::Bool
+    attribute :allow_showtimes_after_close, Types::Bool
+    attribute :disconnected_fastpass_booth, Types::Bool
+    attribute :arrive_before, Types::Bool.optional
+    attribute :arrive_before_fp, Types::Bool.optional
+    attribute :allow_time_restriction, Types::Bool
+    attribute :relative_open_to_sunset, Types::Bool.optional
+    attribute :relative_close_to_sunset, Types::Bool.optional
+    attribute :closing_round_code, Types::Bool.optional
+    attribute :walking_time_proxy_id, Types::Integer.optional
+    attribute :flexible_duration, Types::Bool
+    attribute :operator_id, Types::Integer
+    attribute :operator_type, Types::String
+    attribute :hide_app, Types::Bool
+    attribute :showtime_proxy_id, Types::Integer.optional
+    attribute :sort_name, Types::String
+    attribute :extinct_on_uncertain, Types::Bool.optional
+    attribute :opened_on_uncertain, Types::Bool.optional
+    attribute :ignore_scrapes, Types::Bool.optional
+    attribute :extra_cost, Types::Bool
+    attribute :climate_controlled, Types::Bool
+    attribute :wet, Types::Bool.optional
+    attribute :operational_notes, Types::String.optional
+    attribute :masthead_circle_x, Types::Integer
+    attribute :masthead_circle_y, Types::Integer
+    attribute :latitude, Types::String
+    attribute :longitude, Types::String
+    attribute :open_early, Types::Bool
+    attribute :themeparks_entity_id, Types::String
+    attribute :has_virtual_queue, Types::Bool
   end
 
   # model with the attributes
@@ -422,6 +571,37 @@ module Touringplans
     attribute :venue_permalink, Types::String.optional
   end
 
+  # model with the attributes
+  class HotelFull < Dry::Struct
+    transform_keys(&:to_sym)
+
+    attribute :name, Types::String
+    attribute :address, Types::String
+    attribute :city, Types::String
+    attribute :state_code, Types::String
+    attribute :zip_code, Types::String
+    attribute :phone_number, Types::String
+    attribute :url, Types::String
+    attribute :off_site, Types::Bool
+    attribute :water_sports, Types::Bool
+    attribute :marina, Types::Bool
+    attribute :beach, Types::Bool
+    attribute :tennis, Types::Bool
+    attribute :biking, Types::Bool
+    attribute :suites, Types::Bool
+    attribute :concierge_floor, Types::Bool
+    attribute :room_service, Types::Bool
+    attribute :wired_internet, Types::Bool
+    attribute :wireless_internet, Types::Bool
+    attribute :num_rooms, Types::Integer
+    attribute :theme, Types::String
+    attribute :cost_range, Types::String
+    attribute :shuttle_to_parks, Types::Bool
+    attribute :cost_estimate, Types::String.optional
+    attribute :lodging_area_code, Types::String
+    attribute :category_code, Types::String
+  end
+
   PLACE_KEYS          = %i[magic_kingdom
                            animal_kingdom
                            epcot
@@ -430,6 +610,7 @@ module Touringplans
   # {interest:"interest_type"}
   INTERESTS           = %i[counter_services
                            table_services
+                           dining
                            attractions
                            hotels
                            campground
@@ -455,11 +636,11 @@ module Touringplans
     client = _setup_client
     listings            = []
     interest_type       = _determine_interest_type(interest)
-    route               = _assemble_route(location, interest_type)
+    route               = _assemble_route(location, interest_type, "list")
     response            = client.send(route).parsed_response
     listing_hashes      = _collect_listing_hashes_from_response(interest, response)
     listing_hashes.each do |item|
-      item["venue_permalink"] = location.to_s.downcase.gsub(" ", "-")
+      item["venue_permalink"] = location.to_s.downcase.gsub(" ", "-").gsub("_", "-")
     end
 
     listing_hashes.each do |hash|
@@ -504,14 +685,15 @@ module Touringplans
     places.flatten
   end
 
-  def self.show(interest_type, short_name)
-    return "The interest_type is not valid" unless %i[dining attractions hotels].include? _symbolize(interest_type)
+  def self.show(place, interest_type, permalink)
+    # see specs for examples
+    return "The location is not on Disney property" unless PLACE_KEYS.include? _symbolize(place)
+    return "The interest_type is not valid" unless INTERESTS.include? _symbolize(interest_type)
 
-    # get a list of every model of one kind of interest_type (dining, attractions, hotels)
-    places = list_all(interest_type)
-
-    # filter by short_name
-    places.find  { |place| place.short_name == short_name }
+    client    = _setup_client
+    route     = _assemble_route(place, interest_type, permalink)
+    response  = client.send(route).parsed_response
+    _set_model_from_hash(interest_type, response)
   end
 
   def self._setup_client
@@ -544,10 +726,16 @@ module Touringplans
     str.to_sym
   end
 
-  def self._assemble_route(location, interest_type)
-    formatted_location      = location.to_s.downcase.gsub(" ", "_")
-    formatted_interest_type = interest_type.to_s.downcase.gsub(" ", "_")
-    "#{formatted_location}_#{formatted_interest_type}"
+  def self._assemble_route(collection, interest_type, venue)
+    # format route
+    collection    = collection.to_s.downcase.gsub(" ", "_").gsub("-", "_")
+    interest_type = interest_type.to_s.downcase.gsub(" ", "_").gsub("-", "_")
+    venue         = venue.to_s.downcase.gsub(" ", "_").gsub("-", "_")
+
+    route = [collection, interest_type, venue].join("_")
+    route = [collection, interest_type].join("_") if venue == "list"
+
+    route
   end
 
   def self._collect_listing_hashes_from_response(interest, response)
@@ -602,10 +790,18 @@ module Touringplans
   def self._set_model_from_hash(interest, hash)
     hotel_categories = %i[campground deluxe_hotels deluxe_villas moderate_hotels value_hotels disney_springs_resorts hotels]
 
-    listing = CounterServiceLocation.new(hash)  if interest == "counter services"
-    listing = TableServiceLocation.new(hash)    if interest == "table services"
-    listing = ParkAttraction.new(hash)          if interest == "attractions"
-    listing = Hotel.new(hash)                   if hotel_categories.include? _symbolize(interest)
+    if hash["permalink"].to_s.length > 1
+      listing = CounterServiceLocation.new(hash)  if interest == "counter services"
+      listing = TableServiceLocation.new(hash)    if interest == "table services"
+      listing = ParkAttraction.new(hash)          if interest == "attractions"
+      listing = DiningVenueFull.new(hash)         if interest == "dining"
+      listing = Hotel.new(hash)                   if hotel_categories.include? _symbolize(interest)      
+    else
+      listing = DiningVenueFull.new(hash)         if interest == "dining"
+      listing = ParkAttractionFull.new(hash)      if interest == "attractions"
+      listing = HotelFull.new(hash)               if hotel_categories.include? _symbolize(interest)            
+    end
+
     listing
   end
 end
