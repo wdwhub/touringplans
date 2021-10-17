@@ -494,13 +494,13 @@ module Touringplans
     attribute :category_code, Types::String
     attribute :duration, Types::Float
     attribute :scheduled_code, Types::String.optional
-    attribute :what_it_is, Types::String
-    attribute :scope_and_scale_code, Types::String
-    attribute :when_to_go, Types::String
-    attribute :average_wait_per_hundred, Types::Float
+    attribute :what_it_is, Types::String.optional
+    attribute :scope_and_scale_code, Types::String.optional
+    attribute :when_to_go, Types::String.optional
+    attribute :average_wait_per_hundred, Types::String.optional
     attribute :average_wait_assumes, Types::String.optional
-    attribute :loading_speed, Types::String
-    attribute :probable_wait_time, Types::Float.optional
+    attribute :loading_speed, Types::String.optional
+    attribute :probable_wait_time, Types::String.optional
     attribute :special_needs, Types::String.optional
     attribute :height_restriction, Types::Float.optional
     attribute :intense, Types::Bool
