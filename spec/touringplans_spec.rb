@@ -114,7 +114,7 @@ RSpec.describe Touringplans do
   end
 
   describe "#show" do
-    # context "when we want to just show something" do
+    context "when we want to just show something" do
     #   it "supports showing an attraction's details" do
     #     # magic_kingdom_attractions_casey_jr_splash_n_soak_station
     #     # https://touringplans.com/magic-kingdom/attractions/casey-jr-splash-n-soak-station.json
@@ -134,7 +134,122 @@ RSpec.describe Touringplans do
     #     # https://touringplans.com/walt-disney-world/hotels/disneys-grand-floridian-resort.json
     #     expect(Touringplans.show("walt disney world", "hotels", "disneys polynesian resort")).to eq("something")
     #   end      
-    # end
+      context "with attractions" do
+        interest = "attractions"
+
+        it "confirms no attraction type errors in Animal Kingdom" do
+          collection = "Animal Kingdom"
+          # this runs through all of the attractions in animal kingdom
+          # a success is seeing an array of attractions w/o errors
+          attractions = Touringplans.list(interest, collection)
+          subject = attractions.each {|a| Touringplans.show(collection,interest, a.permalink) }
+
+          expect(subject.class.to_s).to eq("Array")
+        end
+
+        it "confirms no attraction type errors in Epcot" do
+          # this runs through all of the attractions in magic kingdom
+          # a success is seeing an array of attractions w/o errors
+          collection = "epcot"
+          attractions = Touringplans.list(interest, collection)
+          subject = attractions.each {|a| Touringplans.show(collection,interest, a.permalink) }
+
+          expect(subject.class.to_s).to eq("Array")
+        end
+        
+        it "confirms no attraction type errors in Hollywood Studios" do
+          # this runs through all of the attractions in magic kingdom
+          # a success is seeing an array of attractions w/o errors
+          collection = "hollywood studios"
+          attractions = Touringplans.list(interest, collection)
+          subject = attractions.each {|a| Touringplans.show(collection,interest, a.permalink) }
+
+          expect(subject.class.to_s).to eq("Array")
+        end
+        
+        it "confirms no attraction type errors in Magic Kingdom" do
+          # this runs through all of the attractions in magic kingdom
+          # a success is seeing an array of attractions w/o errors
+          collection = "magic kingdom"
+          attractions = Touringplans.list(interest, collection)
+          subject = attractions.each {|a| Touringplans.show(collection,interest, a.permalink) }
+
+          expect(subject.class.to_s).to eq("Array")
+        end
+        
+      end
+              
+      context "with dining" do
+        interest = "dining"
+
+        it "confirms no dining type errors in Animal Kingdom" do
+          # this runs through all of the dining venues in animal kingdom
+          # a success is seeing an array of dining venues w/o errors
+          collection = "Animal Kingdom"
+          counter_services = Touringplans.list("counter services", collection)
+          table_services = Touringplans.list("table services", collection)
+          dining_services = table_services + counter_services
+
+          subject = dining_services.each {|a| Touringplans.show(collection, interest, a.permalink) }
+
+          expect(subject.class.to_s).to eq("Array")
+        end
+
+        it "confirms no dining type errors in Epcot" do
+          # this runs through all of the dining venues in animal kingdom
+          # a success is seeing an array of dining venues w/o errors
+          collection = "Epcot"
+          counter_services = Touringplans.list("counter services", collection)
+          table_services = Touringplans.list("table services", collection)
+          dining_services = table_services + counter_services
+
+          subject = dining_services.each {|a| Touringplans.show(collection, interest, a.permalink) }
+
+          expect(subject.class.to_s).to eq("Array")
+        end
+        
+        it "confirms no dining type errors in Hollywood Studios" do
+          # this runs through all of the dining venues in animal kingdom
+          # a success is seeing an array of dining venues w/o errors
+          collection = "Hollywood Studios"
+          counter_services = Touringplans.list("counter services", collection)
+          table_services = Touringplans.list("table services", collection)
+          dining_services = table_services + counter_services
+
+          subject = dining_services.each {|a| Touringplans.show(collection, interest, a.permalink) }
+
+          expect(subject.class.to_s).to eq("Array")
+        end
+        
+        it "confirms no dining type errors in Magic Kingdom" do
+          # this runs through all of the dining venues in animal kingdom
+          # a success is seeing an array of dining venues w/o errors
+          collection = "Magic Kingdom"
+          counter_services = Touringplans.list("counter services", collection)
+          table_services = Touringplans.list("table services", collection)
+          dining_services = table_services + counter_services
+
+          subject = dining_services.each {|a| Touringplans.show(collection, interest, a.permalink) }
+
+          expect(subject.class.to_s).to eq("Array")
+        end
+                
+      end
+    end
+
+      context "with hotels" do
+        interest = "hotels"
+        hotels = Touringplans.list_all("hotels")
+
+        it "confirms no hotels type errors in walt disney world" do
+          # this runs through all of the hotels in walt disney world
+          # a success is seeing an array of hotels w/o errors
+          collection = "walt disney world"
+          subject = hotels.each {|a| Touringplans.show(collection,interest, a.permalink) }
+
+          expect(subject.class.to_s).to eq("Array")
+        end        
+      end
     
     context "when showing the details for a dining location" do
       context "counter service with a short_name" do
