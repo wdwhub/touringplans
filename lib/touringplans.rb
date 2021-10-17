@@ -447,11 +447,10 @@ module Touringplans
     attribute :short_name, Types::String.optional
     attribute :accepts_reservations, Types::Params::Bool
     attribute :kosher_available, Types::Params::Bool
-
-    attribute :operator_id, Types::Integer
+    attribute :operator_id, Types::Coercible::Integer.optional
     attribute :operator_url, Types::String.optional
     attribute :operator_type, Types::String.optional
-    attribute :walking_time_proxy_id, Types::String.optional
+    attribute :walking_time_proxy_id, Types::Integer.optional
     attribute :sort_name, Types::String.optional
     attribute :mobile_ordering, Types::Bool.optional
     attribute :extinct_on_uncertain, Types::String.optional
@@ -492,17 +491,17 @@ module Touringplans
     attribute :open_very_merry, Types::Bool
     attribute :open_not_so_scary, Types::Bool
     attribute :category_code, Types::String.optional
-    attribute :duration, Types::Float
+    attribute :duration, Types::Float.optional
     attribute :scheduled_code, Types::String.optional
     attribute :what_it_is, Types::String.optional
     attribute :scope_and_scale_code, Types::String.optional
     attribute :when_to_go, Types::String.optional
-    attribute :average_wait_per_hundred, Types::String.optional
+    attribute :average_wait_per_hundred, Types::Float.optional
     attribute :average_wait_assumes, Types::String.optional
     attribute :loading_speed, Types::String.optional
     attribute :probable_wait_time, Types::String.optional
     attribute :special_needs, Types::String.optional
-    attribute :height_restriction, Types::Float.optional
+    attribute :height_restriction, Types::Coercible::Integer.optional
     attribute :intense, Types::Bool
     attribute :extinct_on, Types::Params::DateTime.optional
     attribute :opened_on, Types::Params::DateTime.optional
@@ -522,24 +521,24 @@ module Touringplans
     attribute :ultimate_code, Types::String.optional
     attribute :ultimate_task, Types::String.optional
     attribute :park_entrance, Types::Bool
-    attribute :relative_open, Types::Bool.optional
-    attribute :relative_close, Types::Bool.optional
+    # attribute :relative_open, Types::Float.optional
+    # attribute :relative_close, Types::Bool.optional
     attribute :close_at_dusk, Types::Bool.optional
     attribute :crowd_calendar_version, Types::Integer
-    attribute :match_name, Types::String
+    attribute :match_name, Types::String.optional
     attribute :crazy_threshold, Types::Integer.optional
     attribute :fastpass_only, Types::Bool
     attribute :allow_showtimes_after_close, Types::Bool
     attribute :disconnected_fastpass_booth, Types::Bool
-    attribute :arrive_before, Types::Bool.optional
-    attribute :arrive_before_fp, Types::Bool.optional
+    attribute :arrive_before, Types::Integer.optional
+    attribute :arrive_before_fp, Types::Integer.optional
     attribute :allow_time_restriction, Types::Bool
-    attribute :relative_open_to_sunset, Types::Bool.optional
-    attribute :relative_close_to_sunset, Types::Bool.optional
-    attribute :closing_round_code, Types::Bool.optional
+    attribute :relative_open_to_sunset, Types::Integer.optional
+    attribute :relative_close_to_sunset, Types::Integer.optional
+    attribute :closing_round_code, Types::String.optional
     attribute :walking_time_proxy_id, Types::Integer.optional
-    attribute :flexible_duration, Types::Bool
-    attribute :operator_id, Types::Integer
+    # attribute :flexible_duration, Types::Bool
+    attribute :operator_id, Types::Coercible::Integer.optional
     attribute :operator_type, Types::String.optional
     attribute :hide_app, Types::Bool
     attribute :showtime_proxy_id, Types::Integer.optional
@@ -551,12 +550,12 @@ module Touringplans
     attribute :climate_controlled, Types::Bool
     attribute :wet, Types::Bool.optional
     attribute :operational_notes, Types::String.optional
-    attribute :masthead_circle_x, Types::Integer
-    attribute :masthead_circle_y, Types::Integer
+    # attribute :masthead_circle_x, Types::Integer
+    # attribute :masthead_circle_y, Types::Integer
     attribute :latitude, Types::String.optional
     attribute :longitude, Types::String.optional
     attribute :open_early, Types::Bool
-    attribute :themeparks_entity_id, Types::String
+    attribute :themeparks_entity_id, Types::String.optional
     attribute :has_virtual_queue, Types::Bool
   end
 
@@ -576,12 +575,12 @@ module Touringplans
     transform_keys(&:to_sym)
 
     attribute :name, Types::String
-    attribute :address, Types::String
-    attribute :city, Types::String
-    attribute :state_code, Types::String
-    attribute :zip_code, Types::String
-    attribute :phone_number, Types::String
-    attribute :url, Types::String
+    attribute :address, Types::String.optional
+    attribute :city, Types::String.optional
+    attribute :state_code, Types::String.optional
+    attribute :zip_code, Types::String.optional
+    attribute :phone_number, Types::String.optional
+    attribute :url, Types::String.optional
     attribute :off_site, Types::Bool
     attribute :water_sports, Types::Bool
     attribute :marina, Types::Bool
@@ -594,12 +593,12 @@ module Touringplans
     attribute :wired_internet, Types::Bool
     attribute :wireless_internet, Types::Bool
     attribute :num_rooms, Types::Integer
-    attribute :theme, Types::String
-    attribute :cost_range, Types::String
+    attribute :theme, Types::String.optional
+    attribute :cost_range, Types::String.optional
     attribute :shuttle_to_parks, Types::Bool
     attribute :cost_estimate, Types::String.optional
-    attribute :lodging_area_code, Types::String
-    attribute :category_code, Types::String
+    attribute :lodging_area_code, Types::String.optional
+    attribute :category_code, Types::String.optional
   end
 
   PLACE_KEYS          = %i[magic_kingdom
