@@ -481,17 +481,17 @@ module Touringplans
 
     attribute :name, Types::String
     attribute :fastpass_booth, Types::Bool
-    attribute :short_name, Types::String
+    attribute :short_name, Types::String.optional
     attribute :created_at, Types::Params::DateTime
     attribute :updated_at, Types::Params::DateTime
     attribute :open_emh_morning, Types::Bool
     attribute :open_emh_evening, Types::Bool
     attribute :single_rider, Types::Bool
-    attribute :time_zone, Types::String
+    attribute :time_zone, Types::String.optional
     attribute :seasonal, Types::Bool
     attribute :open_very_merry, Types::Bool
     attribute :open_not_so_scary, Types::Bool
-    attribute :category_code, Types::String
+    attribute :category_code, Types::String.optional
     attribute :duration, Types::Float
     attribute :scheduled_code, Types::String.optional
     attribute :what_it_is, Types::String.optional
@@ -513,14 +513,14 @@ module Touringplans
     attribute :reflective_captioning, Types::Bool
     attribute :assistive_listening, Types::Bool
     attribute :audio_description, Types::Bool
-    attribute :wheelchair_transfer_code, Types::String
+    attribute :wheelchair_transfer_code, Types::String.optional
     attribute :no_service_animals, Types::Bool
     attribute :sign_language, Types::Bool
     attribute :service_animal_check, Types::Bool
     attribute :not_to_be_missed, Types::Bool
     attribute :rider_swap, Types::Bool
-    attribute :ultimate_code, Types::String
-    attribute :ultimate_task, Types::String
+    attribute :ultimate_code, Types::String.optional
+    attribute :ultimate_task, Types::String.optional
     attribute :park_entrance, Types::Bool
     attribute :relative_open, Types::Bool.optional
     attribute :relative_close, Types::Bool.optional
@@ -540,7 +540,7 @@ module Touringplans
     attribute :walking_time_proxy_id, Types::Integer.optional
     attribute :flexible_duration, Types::Bool
     attribute :operator_id, Types::Integer
-    attribute :operator_type, Types::String
+    attribute :operator_type, Types::String.optional
     attribute :hide_app, Types::Bool
     attribute :showtime_proxy_id, Types::Integer.optional
     attribute :sort_name, Types::String
@@ -553,8 +553,8 @@ module Touringplans
     attribute :operational_notes, Types::String.optional
     attribute :masthead_circle_x, Types::Integer
     attribute :masthead_circle_y, Types::Integer
-    attribute :latitude, Types::String
-    attribute :longitude, Types::String
+    attribute :latitude, Types::String.optional
+    attribute :longitude, Types::String.optional
     attribute :open_early, Types::Bool
     attribute :themeparks_entity_id, Types::String
     attribute :has_virtual_queue, Types::Bool
