@@ -574,13 +574,13 @@ module Touringplans
   class HotelFull < Dry::Struct
     transform_keys(&:to_sym)
 
-    attribute :name, Types::String
-    attribute :address, Types::String.optional
-    attribute :city, Types::String.optional
-    attribute :state_code, Types::String.optional
-    attribute :zip_code, Types::String.optional
-    attribute :phone_number, Types::String.optional
-    attribute :url, Types::String.optional
+    attribute :name, Types::Coercible::String
+    attribute :address, Types::Coercible::String.optional
+    attribute :city, Types::Coercible::String.optional
+    attribute :state_code, Types::Coercible::String.optional
+    attribute :zip_code, Types::Coercible::String.optional
+    attribute :phone_number, Types::Coercible::String.optional
+    attribute :url, Types::Coercible::String.optional
     attribute :off_site, Types::Bool
     attribute :water_sports, Types::Bool
     attribute :marina, Types::Bool
@@ -592,13 +592,13 @@ module Touringplans
     attribute :room_service, Types::Bool
     attribute :wired_internet, Types::Bool
     attribute :wireless_internet, Types::Bool
-    attribute :num_rooms, Types::Integer
-    attribute :theme, Types::String.optional
-    attribute :cost_range, Types::String.optional
+    attribute :num_rooms, Types::Coercible::Integer
+    attribute :theme, Types::Coercible::String.optional
+    attribute :cost_range, Types::Coercible::String.optional
     attribute :shuttle_to_parks, Types::Bool
-    attribute :cost_estimate, Types::String.optional
-    attribute :lodging_area_code, Types::String.optional
-    attribute :category_code, Types::String.optional
+    attribute :cost_estimate, Types::Coercible::String.optional
+    attribute :lodging_area_code, Types::Coercible::String.optional
+    attribute :category_code, Types::Coercible::String.optional
   end
 
   PLACE_KEYS          = %i[magic_kingdom
