@@ -593,7 +593,7 @@ module Touringplans
     attribute :wired_internet, Types::Bool
     attribute :wireless_internet, Types::Bool
     attribute :num_rooms, Types::Integer
-    attribute :theme, Types::String.optional
+    attribute :theme, Types::Coercible::String.optional
     attribute :cost_range, Types::String.optional
     attribute :shuttle_to_parks, Types::Bool
     attribute :cost_estimate, Types::String.optional
