@@ -555,7 +555,7 @@ module Touringplans
     attribute :latitude, Types::String.optional
     attribute :longitude, Types::String.optional
     attribute :open_early, Types::Bool
-    attribute :themeparks_entity_id, Types::String.optional
+    attribute :themeparks_id, Types::String.optional
     attribute :has_virtual_queue, Types::Bool
   end
 
