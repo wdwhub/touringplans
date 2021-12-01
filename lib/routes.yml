@@ -128,21 +128,12 @@ magic_kingdom_attractions_many_adventures_of_winnie_the_pooh:
 magic_kingdom_attractions_ariels_grotto:
   method: get
   path: "/magic-kingdom/attractions/ariels-grotto.json"
-magic_kingdom_attractions_princess_fairytale_hall_elena_cinderella:
-  method: get
-  path: "/magic-kingdom/attractions/princess-fairytale-hall-elena-cinderella.json"
 magic_kingdom_attractions_petes_silly_sideshow_goofy_donald:
   method: get
   path: "/magic-kingdom/attractions/petes-silly-sideshow-goofy-donald.json"
 magic_kingdom_attractions_petes_silly_sideshow_minnie_daisy:
   method: get
   path: "/magic-kingdom/attractions/petes-silly-sideshow-minnie-daisy.json"
-magic_kingdom_attractions_town_square_theater_mickey_mouse:
-  method: get
-  path: "/magic-kingdom/attractions/town-square-theater-mickey-mouse.json"
-magic_kingdom_attractions_princess_fairytale_hall_rapunzel_tiana:
-  method: get
-  path: "/magic-kingdom/attractions/princess-fairytale-hall-rapunzel-tiana.json"
 magic_kingdom_attractions_town_square_theater_tinker_bell:
   method: get
   path: "/magic-kingdom/attractions/town-square-theater-tinker-bell.json"
@@ -176,6 +167,15 @@ magic_kingdom_attractions_pirates_of_the_caribbean:
 magic_kingdom_attractions_prince_charming_regal_carrousel:
   method: get
   path: "/magic-kingdom/attractions/prince-charming-regal-carrousel.json"
+magic_kingdom_attractions_princess_fairytale_hall_elena_cinderella:
+  method: get
+  path: "/magic-kingdom/attractions/princess-fairytale-hall-elena-cinderella.json"
+magic_kingdom_attractions_town_square_theater_mickey_mouse:
+  method: get
+  path: "/magic-kingdom/attractions/town-square-theater-mickey-mouse.json"
+magic_kingdom_attractions_princess_fairytale_hall_rapunzel_tiana:
+  method: get
+  path: "/magic-kingdom/attractions/princess-fairytale-hall-rapunzel-tiana.json"
 magic_kingdom_attractions_seven_dwarfs_mine_train:
   method: get
   path: "/magic-kingdom/attractions/seven-dwarfs-mine-train.json"
@@ -647,6 +647,9 @@ animal_kingdom_dining_yak_yeti_restaurant:
 epcot_dining_la_cantina_de_san_angel:
   method: get
   path: "/epcot/dining/la-cantina-de-san-angel.json"
+epcot_dining_connections_cafe_eatery:
+  method: get
+  path: "/epcot/dining/connections-cafe-eatery.json"
 epcot_dining_crepes_emporter:
   method: get
   path: "/epcot/dining/crepes-emporter.json"
