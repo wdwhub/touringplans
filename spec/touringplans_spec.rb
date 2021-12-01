@@ -50,7 +50,7 @@ RSpec.describe Touringplans do
     ########################
     context "at Epcot" do
       it "supports listing counter service dining locations in Epcot" do
-        expect(Touringplans.list("counter services", "Epcot").length).to eq(16)
+        expect(Touringplans.list("counter services", "Epcot").length).to eq(17)
       end
 
       it "supports listing table service dining locations in Epcot" do
@@ -323,15 +323,15 @@ RSpec.describe Touringplans do
         end        
 
         it "supports house_specialties" do
-          expect(venue.house_specialties).to eq("Rotisserie chicken and ribs; burgers (and vegetarian burgers); hot\r\ndogs; Greek salad; chicken, turkey, and vegetable sandwiches; chicken\r\nnuggets; chili-cheese dog; barbecue-pork sandwich; chicken-noodle\r\nsoup; chili-cheese fries; gelato and cake for dessert. Kosher choices available\r\nby request.")
+          expect(venue.house_specialties).to eq("Burgers, hot dogs, Greek salad, chicken sandwich, chicken strips,\r\nchili-cheese dog, Angus bacon cheeseburger, plant-based burger, chocolate\r\nBundt cake for dessert. Kosher choices available on request.")
         end        
 
         it "supports counter_quality_rating" do
-          expect(venue.counter_quality_rating).to eq("Good")
+          expect(venue.counter_quality_rating).to eq("Fair-poor")
         end        
 
         it "supports counter_value_rating" do
-          expect(venue.counter_value_rating).to eq("B")
+          expect(venue.counter_value_rating).to eq("C-")
         end        
 
         it "supports table_quality_rating" do
@@ -491,7 +491,7 @@ RSpec.describe Touringplans do
         end        
 
         it "supports house_specialties" do
-          expect(venue.house_specialties).to eq("<p>\r\nAll meals are fixed-price character affairs, and the\r\nkitchen is upping its game - at breakfast there's caramel apple-stuffed\r\nFrench toast; goat cheese quiche; poached lobster and shrimp topped\r\nwith a poached egg and hollandaise; beef tenderloin and cheese frittata;\r\nor a healthy plate with scrambled egg whites, hot 10-grain cereal, Greek\r\nyogurt, house-made granola, walnut-sunflower bread, and fresh fruit. At\r\nlunch you'll find fish of the day, braised short ribs with parsnip mashed\r\npotatoes, gnocchi or rice with seasonal vegetables, and pan-seared\r\nchicken with goat cheese polenta. Dinner fare may include slow-roasted\r\npork loin and flourless chocolate cake.\r\n</p>\r\n\r\n<p>Guest order from a limited menu. Seconds or additional items are usually allowed, but are left to the discretion of the server.</p>" )
+          expect(venue.house_specialties).to eq("<p>\r\nLunch and dinner have the same entrée selections: beef\r\ntenderloin, chicken breast, duck two ways, pan-seared scallops, or chickpea\r\n“fingers.” For starters, try the charcuterie plate or the salad; for mains, the\r\nbeef tenderloin comes with a Bordelaise sauce that should be sold by the\r\nbottle. Ask your server if you can sample each of the three desserts.\r\n</p>\r\n\r\n" )
         end        
 
         it "supports counter_quality_rating" do
@@ -631,7 +631,7 @@ RSpec.describe Touringplans do
 
   describe "#list_all - as a user I want to" do
     it "list all of the dining locations in the parks" do
-      expect(Touringplans.list_all("dining").length).to eq(87)
+      expect(Touringplans.list_all("dining").length).to eq(88)
     end
 
     it "list all of the attractions in the parks" do

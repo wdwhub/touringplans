@@ -288,7 +288,7 @@ module Touringplans
     attribute :category_code, Types::String
     attribute :portion_size, Types::String.optional
     attribute :cost_code, Types::String.optional
-    attribute :cuisine, Types::String
+    attribute :cuisine, Types::String.optional
     attribute :phone_number, Types::String.optional
     attribute :entree_range, Types::String.optional
     attribute :when_to_go, Types::String.optional
@@ -350,7 +350,7 @@ module Touringplans
     attribute :category_code, Types::String
     attribute :portion_size, Types::String.optional
     attribute :cost_code, Types::String.optional
-    attribute :cuisine, Types::String
+    attribute :cuisine, Types::String.optional
     attribute :phone_number, Types::String.optional
     attribute :entree_range, Types::String.optional
     attribute :when_to_go, Types::String.optional
@@ -410,7 +410,7 @@ module Touringplans
     attribute :category_code, Types::String
     attribute :portion_size, Types::String.optional
     attribute :cost_code, Types::String.optional
-    attribute :cuisine, Types::String
+    attribute :cuisine, Types::String.optional
     attribute :phone_number, Types::String.optional
     attribute :entree_range, Types::String.optional
     attribute :when_to_go, Types::String.optional
