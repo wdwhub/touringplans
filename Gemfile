@@ -15,6 +15,6 @@ gem "rspec", "~> 3.0"
 
 ## custom for gem
 # connect to the API
-gem "httparty", "~> 0.19.0"
+gem "httparty", "~> 0.21.0"
 # convert httparty hash to objects
 gem 'dry-struct', '~> 1.4'
