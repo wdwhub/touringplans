@@ -324,7 +324,7 @@ RSpec.describe Touringplans do
         end        
 
         it "supports house_specialties" do
-          expect(venue.house_specialties).to eq("Burgers, hot dogs, Greek salad, chicken sandwich, chicken strips,\r\nchili-cheese dog, Angus bacon cheeseburger, plant-based burger, chocolate\r\nBundt cake for dessert. Kosher choices available on request.")
+          expect(venue.house_specialties).to eq( "Burgers are the staple food here. Kosher choices available on request.")
         end        
 
         it "supports counter_quality_rating" do
