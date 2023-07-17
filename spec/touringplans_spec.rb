@@ -452,7 +452,7 @@ RSpec.describe Touringplans do
         end        
 
         it "supports entree_range" do
-          expect(venue.entree_range).to eq("Breakfast: Adult $42, Child $27 ◆ Lunch: Adult $62, Child $37 ◆ Dinner: Adult $62, Child $37" )
+          expect(venue.entree_range).to eq("Breakfast: Adult $65, Child $39 ◆ Lunch: Adult $79, Child $47 ◆ Dinner: Adult $79, Child $47" )
         end        
 
         it "supports when_to_go" do
@@ -492,7 +492,7 @@ RSpec.describe Touringplans do
         end        
 
         it "supports house_specialties" do
-          expect(venue.house_specialties).to eq("<p>\r\nLunch and dinner have the same entrée selections: beef\r\ntenderloin, chicken breast, duck two ways, pan-seared scallops, or chickpea\r\n“fingers.” For starters, try the charcuterie plate or the salad; for mains, the\r\nbeef tenderloin comes with a Bordelaise sauce that should be sold by the\r\nbottle. Ask your server if you can sample each of the three desserts.\r\n</p>\r\n\r\n" )
+          expect(venue.house_specialties).to eq("<p>Breakfast options are fairly standard for Disney, with eggs, bacon, waffles, and the like.</p>\r\n<p>\r\nLunch and dinner have the same entrée selections: beef\r\ntenderloin, chicken breast, duck two ways, pan-seared scallops, or chickpea\r\n“fingers.” For starters, try the charcuterie plate or the salad; for mains, the\r\nbeef tenderloin comes with a Bordelaise sauce that should be sold by the\r\nbottle. Ask your server if you can sample each of the three desserts.\r\n</p>\r\n\r\n" )
         end        
 
         it "supports counter_quality_rating" do
