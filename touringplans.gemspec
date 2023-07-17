@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rubocop", "~> 1.7"
   spec.add_development_dependency "rspec", "~> 3.0"
 
-  spec.add_runtime_dependency "httparty", "~> 0.19.0"
+  spec.add_runtime_dependency "httparty", "~> 0.21.0"
   spec.add_runtime_dependency 'dry-struct', '~> 1.4'
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
