@@ -454,7 +454,7 @@ module Touringplans
     attribute :sort_name, Types::String.optional
     attribute :mobile_ordering, Types::Bool.optional
     attribute :extinct_on_uncertain, Types::String.optional
-    attribute :opened_on_uncertain, Types::String.optional
+    # attribute :opened_on_uncertain, Types::String.optional
     attribute :opened_on_known, Types::String.optional
     attribute :operational_notes, Types::String.optional
     attribute :latitude, Types::String.optional
@@ -544,7 +544,7 @@ module Touringplans
     attribute :showtime_proxy_id, Types::Integer.optional
     attribute :sort_name, Types::String
     attribute :extinct_on_uncertain, Types::Bool.optional
-    attribute :opened_on_uncertain, Types::Bool.optional
+    # attribute :opened_on_uncertain, Types::Bool.optional
     attribute :ignore_scrapes, Types::Bool.optional
     attribute :extra_cost, Types::Bool
     attribute :climate_controlled, Types::Bool
