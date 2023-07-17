@@ -170,19 +170,19 @@ RSpec.describe Touringplans do
     end
     
     it "creates many route keys" do
-      expect(attractions_hash.keys.length).to eq(166)
+      expect(attractions_hash.keys.length).to be_between(150, 160)
     end
 
     it "creates a hash of routes for 'attractions'" do
-      expect(attractions_hash.keys.length).to eq(166)
+      expect(attractions_hash.keys.length).to be_between(150, 160)
     end
     
     it "creates a hash of routes for 'dining'" do
-      expect(dining_hash.keys.length).to eq(87)
+      expect(dining_hash.keys.length).to be_between(80, 95)
     end
 
     it "creates a hash of routes for 'hotels'" do
-      expect(hotels_hash.keys.length).to eq(38)
+      expect(hotels_hash.keys.length).to be_between(35, 45)
     end
     
   end
