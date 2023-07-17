@@ -65,9 +65,6 @@ magic_kingdom_attractions_casey_jr_splash_n_soak_station:
 magic_kingdom_attractions_caseys_corner_pianist:
   method: get
   path: "/magic-kingdom/attractions/caseys-corner-pianist.json"
-magic_kingdom_attractions_cosmic_dance_party:
-  method: get
-  path: "/magic-kingdom/attractions/cosmic-dance-party.json"
 magic_kingdom_attractions_country_bear_jamboree:
   method: get
   path: "/magic-kingdom/attractions/country-bear-jamboree.json"
@@ -77,6 +74,9 @@ magic_kingdom_attractions_dapper_dans:
 magic_kingdom_attractions_festival_fantasy_parade:
   method: get
   path: "/magic-kingdom/attractions/festival-fantasy-parade.json"
+magic_kingdom_attractions_celebrate_america_fourth_of_july_concert_in_the_sky:
+  method: get
+  path: "/magic-kingdom/attractions/celebrate-america-fourth-of-july-concert-in-the-sky.json"
 magic_kingdom_attractions_dumbo_the_flying_elephant:
   method: get
   path: "/magic-kingdom/attractions/dumbo-the-flying-elephant.json"
@@ -86,18 +86,24 @@ magic_kingdom_attractions_enchanted_tales_with_belle:
 magic_kingdom_attractions_flag_retreat:
   method: get
   path: "/magic-kingdom/attractions/flag-retreat.json"
-magic_kingdom_attractions_frontierland_shootin_arcade:
-  method: get
-  path: "/magic-kingdom/attractions/frontierland-shootin-arcade.json"
-magic_kingdom_attractions_hall_of_presidents:
-  method: get
-  path: "/magic-kingdom/attractions/hall-of-presidents.json"
-magic_kingdom_attractions_haunted_mansion:
-  method: get
-  path: "/magic-kingdom/attractions/haunted-mansion.json"
 magic_kingdom_attractions_frontierland_hoedown:
   method: get
   path: "/magic-kingdom/attractions/frontierland-hoedown.json"
+magic_kingdom_attractions_frontierland_shootin_arcade:
+  method: get
+  path: "/magic-kingdom/attractions/frontierland-shootin-arcade.json"
+magic_kingdom_attractions_goofy_cavalcade:
+  method: get
+  path: "/magic-kingdom/attractions/goofy-cavalcade.json"
+magic_kingdom_attractions_hall_of_presidents:
+  method: get
+  path: "/magic-kingdom/attractions/hall-of-presidents.json"
+magic_kingdom_attractions_happily_ever_after:
+  method: get
+  path: "/magic-kingdom/attractions/happily-ever-after.json"
+magic_kingdom_attractions_haunted_mansion:
+  method: get
+  path: "/magic-kingdom/attractions/haunted-mansion.json"
 magic_kingdom_attractions_its_a_small_world:
   method: get
   path: "/magic-kingdom/attractions/its-a-small-world.json"
@@ -128,33 +134,36 @@ magic_kingdom_attractions_many_adventures_of_winnie_the_pooh:
 magic_kingdom_attractions_ariels_grotto:
   method: get
   path: "/magic-kingdom/attractions/ariels-grotto.json"
+magic_kingdom_attractions_princess_fairytale_hall_cinderella:
+  method: get
+  path: "/magic-kingdom/attractions/princess-fairytale-hall-cinderella.json"
 magic_kingdom_attractions_petes_silly_sideshow_goofy_donald:
   method: get
   path: "/magic-kingdom/attractions/petes-silly-sideshow-goofy-donald.json"
 magic_kingdom_attractions_petes_silly_sideshow_minnie_daisy:
   method: get
   path: "/magic-kingdom/attractions/petes-silly-sideshow-minnie-daisy.json"
-magic_kingdom_attractions_town_square_theater_tinker_bell:
+magic_kingdom_attractions_town_square_theater_mickey_mouse:
   method: get
-  path: "/magic-kingdom/attractions/town-square-theater-tinker-bell.json"
+  path: "/magic-kingdom/attractions/town-square-theater-mickey-mouse.json"
+magic_kingdom_attractions_princess_fairytale_hall_rapunzel_tiana:
+  method: get
+  path: "/magic-kingdom/attractions/princess-fairytale-hall-rapunzel-tiana.json"
+magic_kingdom_attractions_mickey_friends_cavalcade:
+  method: get
+  path: "/magic-kingdom/attractions/mickey-friends-cavalcade.json"
+magic_kingdom_attractions_mickeys_magical_friendship_faire:
+  method: get
+  path: "/magic-kingdom/attractions/mickeys-magical-friendship-faire.json"
 magic_kingdom_attractions_mickeys_philharmagic:
   method: get
   path: "/magic-kingdom/attractions/mickeys-philharmagic.json"
-magic_kingdom_attractions_mickeys_royal_friendship_faire:
-  method: get
-  path: "/magic-kingdom/attractions/mickeys-royal-friendship-faire.json"
 magic_kingdom_attractions_minnies_wonderful_christmastime_fireworks:
   method: get
   path: "/magic-kingdom/attractions/minnies-wonderful-christmastime-fireworks.json"
 magic_kingdom_attractions_monsters_inc_laugh_floor:
   method: get
   path: "/magic-kingdom/attractions/monsters-inc-laugh-floor.json"
-magic_kingdom_attractions_move_it_shake_it_mousekedance_it_street_party:
-  method: get
-  path: "/magic-kingdom/attractions/move-it-shake-it-mousekedance-it-street-party.json"
-magic_kingdom_attractions_once_upon_a_time:
-  method: get
-  path: "/magic-kingdom/attractions/once-upon-a-time.json"
 magic_kingdom_attractions_peter_pans_flight:
   method: get
   path: "/magic-kingdom/attractions/peter-pans-flight.json"
@@ -167,24 +176,15 @@ magic_kingdom_attractions_pirates_of_the_caribbean:
 magic_kingdom_attractions_prince_charming_regal_carrousel:
   method: get
   path: "/magic-kingdom/attractions/prince-charming-regal-carrousel.json"
-magic_kingdom_attractions_princess_fairytale_hall_elena_cinderella:
+magic_kingdom_attractions_royal_princess_processional:
   method: get
-  path: "/magic-kingdom/attractions/princess-fairytale-hall-elena-cinderella.json"
-magic_kingdom_attractions_town_square_theater_mickey_mouse:
-  method: get
-  path: "/magic-kingdom/attractions/town-square-theater-mickey-mouse.json"
-magic_kingdom_attractions_princess_fairytale_hall_rapunzel_tiana:
-  method: get
-  path: "/magic-kingdom/attractions/princess-fairytale-hall-rapunzel-tiana.json"
+  path: "/magic-kingdom/attractions/royal-princess-processional.json"
 magic_kingdom_attractions_seven_dwarfs_mine_train:
   method: get
   path: "/magic-kingdom/attractions/seven-dwarfs-mine-train.json"
 magic_kingdom_attractions_space_mountain:
   method: get
   path: "/magic-kingdom/attractions/space-mountain.json"
-magic_kingdom_attractions_splash_mountain:
-  method: get
-  path: "/magic-kingdom/attractions/splash-mountain.json"
 magic_kingdom_attractions_swiss_family_treehouse:
   method: get
   path: "/magic-kingdom/attractions/swiss-family-treehouse.json"
@@ -197,6 +197,9 @@ magic_kingdom_attractions_tomorrowland_speedway:
 magic_kingdom_attractions_tomorrowland_transit_authority_peoplemover:
   method: get
   path: "/magic-kingdom/attractions/tomorrowland-transit-authority-peoplemover.json"
+magic_kingdom_attractions_tron_lightcycle_power_run:
+  method: get
+  path: "/magic-kingdom/attractions/tron-lightcycle-power-run.json"
 magic_kingdom_attractions_under_the_sea:
   method: get
   path: "/magic-kingdom/attractions/under-the-sea.json"
@@ -218,51 +221,39 @@ magic_kingdom_attractions_enchanted_tiki_room:
 animal_kingdom_attractions_affection_section:
   method: get
   path: "/animal-kingdom/attractions/affection-section.json"
-animal_kingdom_attractions_animal_encounters_up_close_interactions:
-  method: get
-  path: "/animal-kingdom/attractions/animal-encounters-up-close-interactions.json"
 animal_kingdom_attractions_animation_experience:
   method: get
   path: "/animal-kingdom/attractions/animation-experience.json"
 animal_kingdom_attractions_avatar_flight_of_passage:
   method: get
   path: "/animal-kingdom/attractions/avatar-flight-of-passage.json"
-animal_kingdom_attractions_bollywood_beats:
-  method: get
-  path: "/animal-kingdom/attractions/bollywood-beats.json"
 animal_kingdom_attractions_boneyard:
   method: get
   path: "/animal-kingdom/attractions/boneyard.json"
-animal_kingdom_attractions_festival_of_the_lion_king:
+animal_kingdom_attractions_chakranadi:
   method: get
-  path: "/animal-kingdom/attractions/festival-of-the-lion-king.json"
-animal_kingdom_attractions_chakrandi:
-  method: get
-  path: "/animal-kingdom/attractions/chakrandi.json"
+  path: "/animal-kingdom/attractions/chakranadi.json"
 animal_kingdom_attractions_conservation_station:
   method: get
   path: "/animal-kingdom/attractions/conservation-station.json"
 animal_kingdom_attractions_dinosaur:
   method: get
   path: "/animal-kingdom/attractions/dinosaur.json"
-animal_kingdom_attractions_discovery_island_carnivale:
-  method: get
-  path: "/animal-kingdom/attractions/discovery-island-carnivale.json"
 animal_kingdom_attractions_discovery_island_trails:
   method: get
   path: "/animal-kingdom/attractions/discovery-island-trails.json"
 animal_kingdom_attractions_divine:
   method: get
   path: "/animal-kingdom/attractions/divine.json"
-animal_kingdom_attractions_dj_anaan:
-  method: get
-  path: "/animal-kingdom/attractions/dj-anaan.json"
 animal_kingdom_attractions_expedition_everest:
   method: get
   path: "/animal-kingdom/attractions/expedition-everest.json"
 animal_kingdom_attractions_feathered_friends_in_flight:
   method: get
   path: "/animal-kingdom/attractions/feathered-friends-in-flight.json"
+animal_kingdom_attractions_festival_of_the_lion_king:
+  method: get
+  path: "/animal-kingdom/attractions/festival-of-the-lion-king.json"
 animal_kingdom_attractions_finding_nemo_the_musical:
   method: get
   path: "/animal-kingdom/attractions/finding-nemo-the-musical.json"
@@ -272,24 +263,15 @@ animal_kingdom_attractions_gorilla_falls_exploration_trail:
 animal_kingdom_attractions_habitat_habit:
   method: get
   path: "/animal-kingdom/attractions/habitat-habit.json"
-animal_kingdom_attractions_hakuna_matata_time_dance_party:
-  method: get
-  path: "/animal-kingdom/attractions/hakuna-matata-time-dance-party.json"
 animal_kingdom_attractions_harambe_acrobats:
   method: get
   path: "/animal-kingdom/attractions/harambe-acrobats.json"
-animal_kingdom_attractions_wildlife_parti:
-  method: get
-  path: "/animal-kingdom/attractions/wildlife-parti.json"
 animal_kingdom_attractions_tough_to_be_a_bug:
   method: get
   path: "/animal-kingdom/attractions/tough-to-be-a-bug.json"
 animal_kingdom_attractions_kali_river_rapids:
   method: get
   path: "/animal-kingdom/attractions/kali-river-rapids.json"
-animal_kingdom_attractions_karibu_sisters:
-  method: get
-  path: "/animal-kingdom/attractions/karibu-sisters.json"
 animal_kingdom_attractions_kilimanjaro_safaris:
   method: get
   path: "/animal-kingdom/attractions/kilimanjaro-safaris.json"
@@ -305,12 +287,6 @@ animal_kingdom_attractions_adventurers_outpost:
 animal_kingdom_attractions_navi_river_journey:
   method: get
   path: "/animal-kingdom/attractions/navi-river-journey.json"
-animal_kingdom_attractions_swotu_waya_navi_drum_ceremony:
-  method: get
-  path: "/animal-kingdom/attractions/swotu-waya-navi-drum-ceremony.json"
-animal_kingdom_attractions_pandora_utility_suit:
-  method: get
-  path: "/animal-kingdom/attractions/pandora-utility-suit.json"
 animal_kingdom_attractions_tam_tam_congo:
   method: get
   path: "/animal-kingdom/attractions/tam-tam-congo.json"
@@ -320,9 +296,6 @@ animal_kingdom_attractions_tree_of_life_nighttime_awakenings:
 animal_kingdom_attractions_triceratop_spin:
   method: get
   path: "/animal-kingdom/attractions/triceratop-spin.json"
-animal_kingdom_attractions_up_great_bird_adventure:
-  method: get
-  path: "/animal-kingdom/attractions/up-great-bird-adventure.json"
 animal_kingdom_attractions_valley_of_moara:
   method: get
   path: "/animal-kingdom/attractions/valley-of-moara.json"
@@ -368,6 +341,12 @@ epcot_attractions_movie_preview:
 epcot_attractions_disney_on_broadway_concert:
   method: get
   path: "/epcot/attractions/disney-on-broadway-concert.json"
+epcot_attractions_ducktales_world_showcase_adventure:
+  method: get
+  path: "/epcot/attractions/ducktales-world-showcase-adventure.json"
+epcot_attractions_epcot_forever:
+  method: get
+  path: "/epcot/attractions/epcot-forever.json"
 epcot_attractions_rose_crown_pub_musician:
   method: get
   path: "/epcot/attractions/rose-crown-pub-musician.json"
@@ -380,9 +359,9 @@ epcot_attractions_garden_rocks_concert_series:
 epcot_attractions_gran_fiesta_tour_starring_the_three_caballeros:
   method: get
   path: "/epcot/attractions/gran-fiesta-tour-starring-the-three-caballeros.json"
-epcot_attractions_guardians_galaxy_awesome_mix_live:
+epcot_attractions_guardians_galaxy_cosmic_rewind:
   method: get
-  path: "/epcot/attractions/guardians-galaxy-awesome-mix-live.json"
+  path: "/epcot/attractions/guardians-galaxy-cosmic-rewind.json"
 epcot_attractions_impressions_de_france:
   method: get
   path: "/epcot/attractions/impressions-de-france.json"
@@ -431,9 +410,6 @@ epcot_attractions_seas_with_nemo_friends:
 epcot_attractions_sergio:
   method: get
   path: "/epcot/attractions/sergio.json"
-epcot_attractions_serveur_amusant:
-  method: get
-  path: "/epcot/attractions/serveur-amusant.json"
 epcot_attractions_soarin:
   method: get
   path: "/epcot/attractions/soarin.json"
@@ -449,21 +425,18 @@ epcot_attractions_turtle_talk_with_crush:
 epcot_attractions_voices_of_liberty:
   method: get
   path: "/epcot/attractions/voices-of-liberty.json"
-epcot_attractions_walt_disney_imagineering_presents_epcot_experience:
-  method: get
-  path: "/epcot/attractions/walt-disney-imagineering-presents-epcot-experience.json"
 hollywood_studios_attractions_alien_swirling_saucers:
   method: get
   path: "/hollywood-studios/attractions/alien-swirling-saucers.json"
+hollywood_studios_attractions_bb_8_astromech_on_duty:
+  method: get
+  path: "/hollywood-studios/attractions/bb-8-astromech-on-duty.json"
 hollywood_studios_attractions_beauty_and_the_beast_live_on_stage:
   method: get
   path: "/hollywood-studios/attractions/beauty-and-the-beast-live-on-stage.json"
-hollywood_studios_attractions_celebrate_with_incredibles_at_pixar_place:
+hollywood_studios_attractions_disney_junior_play_dance:
   method: get
-  path: "/hollywood-studios/attractions/celebrate-with-incredibles-at-pixar-place.json"
-hollywood_studios_attractions_disney_junior_dance_party:
-  method: get
-  path: "/hollywood-studios/attractions/disney-junior-dance-party.json"
+  path: "/hollywood-studios/attractions/disney-junior-play-dance.json"
 hollywood_studios_attractions_disney_movie_magic:
   method: get
   path: "/hollywood-studios/attractions/disney-movie-magic.json"
@@ -476,21 +449,21 @@ hollywood_studios_attractions_fantasmic:
 hollywood_studios_attractions_frozen_sing_along_celebration:
   method: get
   path: "/hollywood-studios/attractions/frozen-sing-along-celebration.json"
+hollywood_studios_attractions_green_army_drum_corps:
+  method: get
+  path: "/hollywood-studios/attractions/green-army-drum-corps.json"
 hollywood_studios_attractions_indiana_jones_epic_stunt_spectacular:
   method: get
   path: "/hollywood-studios/attractions/indiana-jones-epic-stunt-spectacular.json"
-hollywood_studios_attractions_jedi_training_academy:
-  method: get
-  path: "/hollywood-studios/attractions/jedi-training-academy.json"
-hollywood_studios_attractions_jingle_bell_jingle_bam:
-  method: get
-  path: "/hollywood-studios/attractions/jingle-bell-jingle-bam.json"
 hollywood_studios_attractions_lightning_mcqueens_racing_academy:
   method: get
   path: "/hollywood-studios/attractions/lightning-mcqueens-racing-academy.json"
 hollywood_studios_attractions_minnie_and_mickey_at_red_carpet_dreams:
   method: get
   path: "/hollywood-studios/attractions/minnie-and-mickey-at-red-carpet-dreams.json"
+hollywood_studios_attractions_celebrity_spotlight_olaf:
+  method: get
+  path: "/hollywood-studios/attractions/celebrity-spotlight-olaf.json"
 hollywood_studios_attractions_mickey_minnies_runaway_railway:
   method: get
   path: "/hollywood-studios/attractions/mickey-minnies-runaway-railway.json"
@@ -533,9 +506,6 @@ hollywood_studios_attractions_tower_of_terror:
 hollywood_studios_attractions_mickey_shorts_theater:
   method: get
   path: "/hollywood-studios/attractions/mickey-shorts-theater.json"
-hollywood_studios_attractions_voyage_of_the_little_mermaid:
-  method: get
-  path: "/hollywood-studios/attractions/voyage-of-the-little-mermaid.json"
 hollywood_studios_attractions_walt_disney_one_mans_dream:
   method: get
   path: "/hollywood-studios/attractions/walt-disney-one-mans-dream.json"
@@ -569,9 +539,6 @@ magic_kingdom_dining_pecos_bill_tall_tale_inn_and_cafe:
 magic_kingdom_dining_pinocchio_village_haus:
   method: get
   path: "/magic-kingdom/dining/pinocchio-village-haus.json"
-magic_kingdom_dining_tomorrowland_terrace:
-  method: get
-  path: "/magic-kingdom/dining/tomorrowland-terrace.json"
 magic_kingdom_dining_tortuga_tavern:
   method: get
   path: "/magic-kingdom/dining/tortuga-tavern.json"
@@ -602,9 +569,6 @@ magic_kingdom_dining_tonys_town_square_restaurant:
 animal_kingdom_dining_creature_comforts_starbucks:
   method: get
   path: "/animal-kingdom/dining/creature-comforts-starbucks.json"
-animal_kingdom_dining_dino_diner:
-  method: get
-  path: "/animal-kingdom/dining/dino-diner.json"
 animal_kingdom_dining_flame_tree_barbecue:
   method: get
   path: "/animal-kingdom/dining/flame-tree-barbecue.json"
@@ -647,9 +611,12 @@ animal_kingdom_dining_yak_yeti_restaurant:
 epcot_dining_la_cantina_de_san_angel:
   method: get
   path: "/epcot/dining/la-cantina-de-san-angel.json"
-epcot_dining_connections_cafe_eatery:
+epcot_dining_connections_cafe:
   method: get
-  path: "/epcot/dining/connections-cafe-eatery.json"
+  path: "/epcot/dining/connections-cafe.json"
+epcot_dining_connections_eatery:
+  method: get
+  path: "/epcot/dining/connections-eatery.json"
 epcot_dining_crepes_emporter:
   method: get
   path: "/epcot/dining/crepes-emporter.json"
@@ -668,9 +635,6 @@ epcot_dining_lotus_blossom_cafe:
 epcot_dining_odyssey:
   method: get
   path: "/epcot/dining/odyssey.json"
-epcot_dining_promenade_refreshments:
-  method: get
-  path: "/epcot/dining/promenade-refreshments.json"
 epcot_dining_refreshment_outpost_coolpost:
   method: get
   path: "/epcot/dining/refreshment-outpost-coolpost.json"
@@ -689,9 +653,6 @@ epcot_dining_sunshine_seasons:
 epcot_dining_tangierine_cafe:
   method: get
   path: "/epcot/dining/tangierine-cafe.json"
-epcot_dining_travelers_cafe:
-  method: get
-  path: "/epcot/dining/travelers-cafe.json"
 epcot_dining_yorkshire_county_fish_shop:
   method: get
   path: "/epcot/dining/yorkshire-county-fish-shop.json"
@@ -725,15 +686,15 @@ epcot_dining_monsieur_paul:
 epcot_dining_nine_dragons_restaurant:
   method: get
   path: "/epcot/dining/nine-dragons-restaurant.json"
-epcot_dining_restaurant_marrakesh:
-  method: get
-  path: "/epcot/dining/restaurant-marrakesh.json"
 epcot_dining_rose_and_crown_dining_room:
   method: get
   path: "/epcot/dining/rose-and-crown-dining-room.json"
 epcot_dining_san_angel_inn:
   method: get
   path: "/epcot/dining/san-angel-inn.json"
+epcot_dining_shiki_sai_sushi_izakaya:
+  method: get
+  path: "/epcot/dining/shiki-sai-sushi-izakaya.json"
 epcot_dining_space_220:
   method: get
   path: "/epcot/dining/space-220.json"
@@ -746,9 +707,6 @@ epcot_dining_takumi_tei:
 epcot_dining_teppan_edo:
   method: get
   path: "/epcot/dining/teppan-edo.json"
-epcot_dining_tokyo_dining:
-  method: get
-  path: "/epcot/dining/tokyo-dining.json"
 epcot_dining_tutto_italia_ristorante:
   method: get
   path: "/epcot/dining/tutto-italia-ristorante.json"
